@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ficha de Treino - Moisés (Mês 06)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .tab-button.active {
+            background-color: #1d4ed8; /* blue-700 */
+            color: white;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8 max-w-4xl">
+        <!-- Header -->
+        <header class="text-center mb-8">
+            <h1 class="text-3xl sm:text-4xl font-bold text-gray-900">Plano de Treino</h1>
+            <p class="text-lg text-gray-600 mt-1">Moisés - Mês 06</p>
+        </header>
+
+        <!-- Tab Buttons -->
+        <div class="flex justify-center space-x-2 sm:space-x-4 mb-8">
+            <button onclick="showTab('fichaA')" id="btn-fichaA" class="tab-button active flex-1 sm:flex-none text-center py-2 px-4 font-semibold rounded-lg shadow-md transition-all duration-300 bg-white text-gray-700 hover:bg-gray-200">Ficha A</button>
+            <button onclick="showTab('fichaB')" id="btn-fichaB" class="tab-button flex-1 sm:flex-none text-center py-2 px-4 font-semibold rounded-lg shadow-md transition-all duration-300 bg-white text-gray-700 hover:bg-gray-200">Ficha B</button>
+            <button onclick="showTab('fichaC')" id="btn-fichaC" class="tab-button flex-1 sm:flex-none text-center py-2 px-4 font-semibold rounded-lg shadow-md transition-all duration-300 bg-white text-gray-700 hover:bg-gray-200">Ficha C</button>
+        </div>
+
+        <!-- Ficha A Content -->
+        <div id="fichaA" class="tab-content active">
+            <div class="space-y-4">
+                <!-- Exercício -->
+                <div class="bg-white p-4 rounded-xl shadow-lg border border-gray-200 flex items-center space-x-4">
+                    <div class="flex-shrink-0 bg-blue-100 p-3 rounded-full">
+                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.063 8.342l-2-4.999-8.063 3.999 1-2-4-2-2 4 11.063 4zM4.937 15.658l2 5 8.063-4-1 2 4 2 2-4-11.063-4z"></path></svg>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-semibold text-gray-900">Supino reto com halter</h3>
+                        <p class="text-sm text-gray-500">3x12 (empurra normal e desce segurando 4s)</p>
+                    </div>
+                    <a href="https://youtube.com/shorts/5IoHFiaAHb8?si=rkUx-2xACjwp7JRs" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Ver Vídeo</a>
+                </div>
+                <!-- Outros exercícios da Ficha A... -->
+                 <div class="bg-white p-4 rounded-xl shadow-lg border border-gray-200 flex items-center space-x-4">
+                    <div class="flex-shrink-0 bg-blue-100 p-3 rounded-full">
+                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.063 8.342l-2-4.999-8.063 3.999 1-2-4-2-2 4 11.063 4zM4.937 15.658l2 5 8.063-4-1 2 4 2 2-4-11.063-4z"></path></svg>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-semibold text-gray-900">Supino 45 no guiado (ou barra livre)</h3>
+                        <p class="text-sm text-gray-500">3x12</p>
+                    </div>
+                    <a href="https://youtube.com/shorts/EzEv5hcFixE?si=uQIm0n6y5qeirLR8" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Ver Vídeo</a>
+                </div>
+                <div class="bg-white p-4 rounded-xl shadow-lg border border-gray-200 flex items-center space-x-4">
+                    <div class="flex-shrink-0 bg-blue-100 p-3 rounded-full">
+                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-semibold text-gray-900">Crucifixo reto em pé (crossover)</h3>
+                        <p class="text-sm text-gray-500">3x12 (empurra normal e desce segurando 4s)</p>
+                    </div>
+                    <a href="https://youtube.com/shorts/Stq2LvCaUS8?si=ZtMjEzL1CqEoFREB" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Ver Vídeo</a>
+                </div>
+                 <div class="bg-white p-4 rounded-xl shadow-lg border border-gray-200 flex items-center space-x-4">
+                    <div class="flex-shrink-0 bg-green-100 p-3 rounded-full">
+                         <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18m-9-4v8"></path></svg>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-semibold text-gray-900">Remada alta no guiado</h3>
+                        <p class="text-sm text-gray-500">3x12 (empurra normal e desce segurando 4s)</p>
+                    </div>
+                    <a href="https://youtube.com/shorts/LXa0IvLV_gg?si=8wcH_LgLWoc-HzOi" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Ver Vídeo</a>
+                </div>
+                 <div class="bg-white p-4 rounded-xl shadow-lg border border-gray-200 flex items-center space-x-4">
+                    <div class="flex-shrink-0 bg-purple-100 p-3 rounded-full">
+                         <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-semibold text-gray-900">Tríceps Francês com Halter</h3>
+                        <p class="text-sm text-gray-500">3x12</p>
+                    </div>
+                    <a href="https://youtube.com/shorts/Az2p67i6rAc?si=cAOCCGBJMj8t42y8" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Ver Vídeo</a>
+                </div>
+                 <div class="bg-white p-4 rounded-xl shadow-lg border border-gray-200 flex items-center space-x-4">
+                    <div class="flex-shrink-0 bg-yellow-100 p-3 rounded-full">
+                        <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.5 10.5L12 3l7.5 7.5M4.5 10.5V19a2 2 0 002 2h11a2 2 0 002-2v-8.5"></path></svg>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-semibold text-gray-900">Abdominal canivete</h3>
+                        <p class="text-sm text-gray-500">3x20</p>
+                    </div>
+                    <a href="https://youtube.com/shorts/XmZBaw8usgo?si=BFKBCy4aqdDqCLub" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Ver Vídeo</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ficha B Content -->
+        <div id="fichaB" class="tab-content">
+            <div class="space-y-4">
+                <div class="bg-white p-4 rounded-xl shadow-lg border border-gray-200 flex items-center space-x-4">
+                    <div class="flex-shrink-0 bg-green-100 p-3 rounded-full">
+                         <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18m-9-4v8"></path></svg>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-semibold text-gray-900">Remada baixa pegada neutra</h3>
+                        <p class="text-sm text-gray-500">3x12</p>
+                    </div>
+                    <a href="https://youtube.com/shorts/4jPBu3JxIJA?si=PV45ZaY-fz-t4Jcp" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Ver Vídeo</a>
+                </div>
+                 <div class="bg-white p-4 rounded-xl shadow-lg border border-gray-200 flex items-center space-x-4">
+                    <div class="flex-shrink-0 bg-red-100 p-3 rounded-full">
+                        <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-semibold text-gray-900">Leg 45</h3>
+                        <p class="text-sm text-gray-500">3x12 (empurra normal e desce segurando 4s)</p>
+                    </div>
+                    <a href="https://youtube.com/shorts/5Pm33Q5w4MM?si=ps7qNFEwNdW6t_ug" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Ver Vídeo</a>
+                </div>
+                <div class="bg-white p-4 rounded-xl shadow-lg border border-gray-200 flex items-center space-x-4">
+                    <div class="flex-shrink-0 bg-red-100 p-3 rounded-full">
+                        <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-semibold text-gray-900">Elevação pélvica</h3>
+                        <p class="text-sm text-gray-500">5x12</p>
+                    </div>
+                    <a href="https://youtube.com/shorts/uvH8ZVB3ZRw?si=xaNrMWq7Q3tMRVkG" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Ver Vídeo</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ficha C Content -->
+        <div id="fichaC" class="tab-content">
+            <div class="space-y-4">
+                <div class="bg-white p-4 rounded-xl shadow-lg border border-gray-200 flex items-center space-x-4">
+                    <div class="flex-shrink-0 bg-red-100 p-3 rounded-full">
+                        <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-semibold text-gray-900">Banco flexor & Stiff</h3>
+                        <p class="text-sm text-gray-500">4x12 (alternado)</p>
+                    </div>
+                    <a href="https://youtube.com/shorts/gTQQ8etNnPA?si=c7N3kQ2QYmO9mPcp" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Ver Vídeo</a>
+                </div>
+                <div class="bg-white p-4 rounded-xl shadow-lg border border-gray-200 flex items-center space-x-4">
+                    <div class="flex-shrink-0 bg-red-100 p-3 rounded-full">
+                        <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9.5M15 9.5V19m0-9.5a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path></svg>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-semibold text-gray-900">Panturrilha leg 45 & Jump</h3>
+                        <p class="text-sm text-gray-500">3x15 + 40s (alternado)</p>
+                    </div>
+                    <a href="https://youtube.com/shorts/erUNxqpFxkc?si=fehOOxIghTnCBk6A" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Ver Vídeo</a>
+                </div>
+                 <div class="bg-white p-4 rounded-xl shadow-lg border border-gray-200 flex items-center space-x-4">
+                    <div class="flex-shrink-0 bg-purple-100 p-3 rounded-full">
+                        <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-semibold text-gray-900">Rosca direta no cross over</h3>
+                        <p class="text-sm text-gray-500">4x12 (empurra normal e desce segurando 4s)</p>
+                    </div>
+                    <a href="https://youtube.com/shorts/e6yZ8_iv4GI?si=TkiA4JNYx2JIx6nZ" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Ver Vídeo</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabId) {
+            // Hide all tab contents
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Deactivate all tab buttons
+            const buttons = document.querySelectorAll('.tab-button');
+            buttons.forEach(button => {
+                button.classList.remove('active');
+            });
+
+            // Show the selected tab content
+            document.getElementById(tabId).classList.add('active');
+            
+            // Activate the selected tab button
+            document.getElementById('btn-' + tabId).classList.add('active');
+        }
+    </script>
+
+</body>
+</html>
