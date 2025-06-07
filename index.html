@@ -21,6 +21,25 @@
         .tab-content.active {
             display: block;
         }
+        .exercise-card {
+            background-color: white;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            border: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .section-title {
+            font-size: 1.25rem; /* text-xl */
+            font-weight: 600; /* font-semibold */
+            color: #111827; /* gray-900 */
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #d1d5db; /* gray-300 */
+        }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800">
@@ -41,140 +60,214 @@
 
         <!-- Ficha A Content -->
         <div id="fichaA" class="tab-content active">
+            <h2 class="section-title">Peito</h2>
             <div class="space-y-4">
-                <!-- Exercício -->
-                <div class="bg-white p-4 rounded-xl shadow-lg border border-gray-200 flex items-center space-x-4">
-                    <div class="flex-shrink-0 bg-blue-100 p-3 rounded-full">
-                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.063 8.342l-2-4.999-8.063 3.999 1-2-4-2-2 4 11.063 4zM4.937 15.658l2 5 8.063-4-1 2 4 2 2-4-11.063-4z"></path></svg>
-                    </div>
-                    <div class="flex-1">
-                        <h3 class="font-semibold text-gray-900">Supino reto com halter</h3>
-                        <p class="text-sm text-gray-500">3x12 (empurra normal e desce segurando 4s)</p>
-                    </div>
-                    <a href="https://youtube.com/shorts/5IoHFiaAHb8?si=rkUx-2xACjwp7JRs" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Ver Vídeo</a>
+                <div class="exercise-card">
+                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
+                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Supino reto com halter</h3><p class="text-sm text-gray-500">3x12 (empurra normal e desce segurando 4s)</p></div>
+                    <a href="https://youtube.com/shorts/5IoHFiaAHb8?si=rkUx-2xACjwp7JRs" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</a>
                 </div>
-                <!-- Outros exercícios da Ficha A... -->
-                 <div class="bg-white p-4 rounded-xl shadow-lg border border-gray-200 flex items-center space-x-4">
-                    <div class="flex-shrink-0 bg-blue-100 p-3 rounded-full">
-                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.063 8.342l-2-4.999-8.063 3.999 1-2-4-2-2 4 11.063 4zM4.937 15.658l2 5 8.063-4-1 2 4 2 2-4-11.063-4z"></path></svg>
-                    </div>
-                    <div class="flex-1">
-                        <h3 class="font-semibold text-gray-900">Supino 45 no guiado (ou barra livre)</h3>
-                        <p class="text-sm text-gray-500">3x12</p>
-                    </div>
-                    <a href="https://youtube.com/shorts/EzEv5hcFixE?si=uQIm0n6y5qeirLR8" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Ver Vídeo</a>
+                <div class="exercise-card">
+                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
+                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Supino 45 no guiado (ou barra livre)</h3><p class="text-sm text-gray-500">3x12</p></div>
+                    <a href="https://youtube.com/shorts/EzEv5hcFixE?si=uQIm0n6y5qeirLR8" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</a>
                 </div>
-                <div class="bg-white p-4 rounded-xl shadow-lg border border-gray-200 flex items-center space-x-4">
-                    <div class="flex-shrink-0 bg-blue-100 p-3 rounded-full">
-                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                    </div>
-                    <div class="flex-1">
-                        <h3 class="font-semibold text-gray-900">Crucifixo reto em pé (crossover)</h3>
-                        <p class="text-sm text-gray-500">3x12 (empurra normal e desce segurando 4s)</p>
-                    </div>
-                    <a href="https://youtube.com/shorts/Stq2LvCaUS8?si=ZtMjEzL1CqEoFREB" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Ver Vídeo</a>
+                <div class="exercise-card">
+                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
+                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Crucifixo reto em pé (crossover)</h3><p class="text-sm text-gray-500">3x12 (empurra normal e desce segurando 4s)</p></div>
+                    <a href="https://youtube.com/shorts/Stq2LvCaUS8?si=ZtMjEzL1CqEoFREB" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</a>
                 </div>
-                 <div class="bg-white p-4 rounded-xl shadow-lg border border-gray-200 flex items-center space-x-4">
-                    <div class="flex-shrink-0 bg-green-100 p-3 rounded-full">
-                         <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18m-9-4v8"></path></svg>
-                    </div>
-                    <div class="flex-1">
-                        <h3 class="font-semibold text-gray-900">Remada alta no guiado</h3>
-                        <p class="text-sm text-gray-500">3x12 (empurra normal e desce segurando 4s)</p>
-                    </div>
-                    <a href="https://youtube.com/shorts/LXa0IvLV_gg?si=8wcH_LgLWoc-HzOi" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Ver Vídeo</a>
+                <div class="exercise-card">
+                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
+                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Supino declinado em pé (crossover)</h3><p class="text-sm text-gray-500">3x12</p></div>
+                    <a href="https://youtube.com/shorts/buMMcTPdRlM?si=M7IKMlZfG9WWY1fR" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</a>
                 </div>
-                 <div class="bg-white p-4 rounded-xl shadow-lg border border-gray-200 flex items-center space-x-4">
-                    <div class="flex-shrink-0 bg-purple-100 p-3 rounded-full">
-                         <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                    </div>
-                    <div class="flex-1">
-                        <h3 class="font-semibold text-gray-900">Tríceps Francês com Halter</h3>
-                        <p class="text-sm text-gray-500">3x12</p>
-                    </div>
-                    <a href="https://youtube.com/shorts/Az2p67i6rAc?si=cAOCCGBJMj8t42y8" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Ver Vídeo</a>
+            </div>
+            
+            <h2 class="section-title">Costas & Ombros</h2>
+            <div class="space-y-4">
+                 <div class="exercise-card">
+                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
+                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Remada alta no guiado</h3><p class="text-sm text-gray-500">3x12 (empurra normal e desce segurando 4s)</p></div>
+                    <a href="https://youtube.com/shorts/LXa0IvLV_gg?si=8wcH_LgLWoc-HzOi" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</a>
                 </div>
-                 <div class="bg-white p-4 rounded-xl shadow-lg border border-gray-200 flex items-center space-x-4">
-                    <div class="flex-shrink-0 bg-yellow-100 p-3 rounded-full">
-                        <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.5 10.5L12 3l7.5 7.5M4.5 10.5V19a2 2 0 002 2h11a2 2 0 002-2v-8.5"></path></svg>
-                    </div>
-                    <div class="flex-1">
-                        <h3 class="font-semibold text-gray-900">Abdominal canivete</h3>
-                        <p class="text-sm text-gray-500">3x20</p>
-                    </div>
-                    <a href="https://youtube.com/shorts/XmZBaw8usgo?si=BFKBCy4aqdDqCLub" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Ver Vídeo</a>
+                <div class="exercise-card">
+                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
+                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Abdução de ombros no crossover</h3><p class="text-sm text-gray-500">3x12</p></div>
+                    <a href="https://youtube.com/shorts/JhS8qt4PASc?si=J9qaDz4AfEpSisXc" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</a>
+                </div>
+                <div class="exercise-card">
+                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
+                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Desenvolvimento livre com barra</h3><p class="text-sm text-gray-500">3x12</p></div>
+                    <a href="https://youtube.com/shorts/QJ52sSpG7nc?si=ZLpZN8anS2N5BHWP" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</a>
+                </div>
+                <div class="exercise-card">
+                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
+                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Crucifixo invertido no crossover</h3><p class="text-sm text-gray-500">3xdrop</p></div>
+                    <a href="https://youtube.com/shorts/Z_WWNHS4F_E?si=NVc1CsGdBKAa6Vd9" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</a>
+                </div>
+            </div>
+
+            <h2 class="section-title">Tríceps</h2>
+             <div class="space-y-4">
+                <div class="exercise-card">
+                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
+                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Tríceps Francês com Halter</h3><p class="text-sm text-gray-500">3x12</p></div>
+                    <a href="https://youtube.com/shorts/Az2p67i6rAc?si=cAOCCGBJMj8t42y8" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</a>
+                </div>
+                <div class="exercise-card">
+                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
+                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Tríceps testa deitado</h3><p class="text-sm text-gray-500">3x12 (empurra normal e desce segurando 4s)</p></div>
+                    <a href="https://youtube.com/shorts/RKUtFDw4tV0?si=UrS5HWFESMqmkcRf" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</a>
+                </div>
+                <div class="exercise-card">
+                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
+                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Tríceps crossover</h3><p class="text-sm text-gray-500">3xdrop</p></div>
+                    <a href="https://youtube.com/shorts/lSxu5skqVgs?si=RT4nqf5AoYaIh7kM" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</a>
+                </div>
+                <div class="exercise-card">
+                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
+                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Tríceps coice unilateral</h3><p class="text-sm text-gray-500">3x12</p></div>
+                    <a href="https://youtu.be/ij2XqG6HhjA?si=-lmSz7jX_CBeNpKr" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</a>
+                </div>
+            </div>
+
+            <h2 class="section-title">Abdômen & Lombar</h2>
+            <div class="space-y-4">
+                 <div class="exercise-card">
+                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
+                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Abdominal canivete</h3><p class="text-sm text-gray-500">3x20</p></div>
+                    <a href="https://youtube.com/shorts/XmZBaw8usgo?si=BFKBCy4aqdDqCLub" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</a>
+                </div>
+                <div class="exercise-card">
+                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
+                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Extensão de tronco no solo</h3><p class="text-sm text-gray-500">3x20</p></div>
+                    <a href="https://youtube.com/shorts/kYxZFALfaCs?si=cnht5hABtjDzkmMj" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</a>
                 </div>
             </div>
         </div>
 
         <!-- Ficha B Content -->
         <div id="fichaB" class="tab-content">
+            <h2 class="section-title">Costas</h2>
             <div class="space-y-4">
-                <div class="bg-white p-4 rounded-xl shadow-lg border border-gray-200 flex items-center space-x-4">
-                    <div class="flex-shrink-0 bg-green-100 p-3 rounded-full">
-                         <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18m-9-4v8"></path></svg>
-                    </div>
-                    <div class="flex-1">
-                        <h3 class="font-semibold text-gray-900">Remada baixa pegada neutra</h3>
-                        <p class="text-sm text-gray-500">3x12</p>
-                    </div>
-                    <a href="https://youtube.com/shorts/4jPBu3JxIJA?si=PV45ZaY-fz-t4Jcp" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Ver Vídeo</a>
+                <div class="exercise-card">
+                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
+                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Remada baixa pegada neutra</h3><p class="text-sm text-gray-500">3x12</p></div>
+                    <a href="https://youtube.com/shorts/4jPBu3JxIJA?si=PV45ZaY-fz-t4Jcp" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</a>
                 </div>
-                 <div class="bg-white p-4 rounded-xl shadow-lg border border-gray-200 flex items-center space-x-4">
-                    <div class="flex-shrink-0 bg-red-100 p-3 rounded-full">
-                        <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                    </div>
-                    <div class="flex-1">
-                        <h3 class="font-semibold text-gray-900">Leg 45</h3>
-                        <p class="text-sm text-gray-500">3x12 (empurra normal e desce segurando 4s)</p>
-                    </div>
-                    <a href="https://youtube.com/shorts/5Pm33Q5w4MM?si=ps7qNFEwNdW6t_ug" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Ver Vídeo</a>
+                <div class="exercise-card">
+                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
+                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Puley pegada supinada</h3><p class="text-sm text-gray-500">3x12 (empurra normal e desce segurando 4s)</p></div>
+                    <a href="https://youtube.com/shorts/NUlKQwuia0c?si=N928L4xbu00WdVol" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</a>
                 </div>
-                <div class="bg-white p-4 rounded-xl shadow-lg border border-gray-200 flex items-center space-x-4">
-                    <div class="flex-shrink-0 bg-red-100 p-3 rounded-full">
-                        <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg>
-                    </div>
-                    <div class="flex-1">
-                        <h3 class="font-semibold text-gray-900">Elevação pélvica</h3>
-                        <p class="text-sm text-gray-500">5x12</p>
-                    </div>
-                    <a href="https://youtube.com/shorts/uvH8ZVB3ZRw?si=xaNrMWq7Q3tMRVkG" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Ver Vídeo</a>
+                <div class="exercise-card">
+                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
+                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Polldown</h3><p class="text-sm text-gray-500">3xdrop</p></div>
+                    <a href="https://youtube.com/shorts/mbBBiOwPKjc?si=UZmtXbE6XGIPRrUJ" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</a>
+                </div>
+                <div class="exercise-card">
+                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
+                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Puley frente</h3><p class="text-sm text-gray-500">3x12 (empurra normal e desce segurando 4s)</p></div>
+                    <a href="https://youtube.com/shorts/x6EtG_TvuiQ?si=TS9kYI7Fih1Qg1Fo" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</a>
+                </div>
+            </div>
+
+            <h2 class="section-title">Pernas & Glúteos</h2>
+            <div class="space-y-4">
+                <div class="exercise-card">
+                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
+                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Leg 45</h3><p class="text-sm text-gray-500">3x12 (empurra normal e desce segurando 4s)</p></div>
+                    <a href="https://youtube.com/shorts/5Pm33Q5w4MM?si=ps7qNFEwNdW6t_ug" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</a>
+                </div>
+                <div class="exercise-card">
+                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
+                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Banco extensor alternado</h3><p class="text-sm text-gray-500">3x12</p></div>
+                    <a href="https://youtube.com/shorts/A7_fRPbrIUM?si=j4RVQQrZrqdTIoxr" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</a>
+                </div>
+                <div class="exercise-card">
+                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
+                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Afundo no guiado + Búlgaro</h3><p class="text-sm text-gray-500">3x12 (alternar)</p></div>
+                    <a href="https://youtube.com/shorts/LFph9adCL8Y?si=yKnaCW6Ra3fveYYt" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</a>
+                </div>
+                <div class="exercise-card">
+                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
+                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Elevação pélvica</h3><p class="text-sm text-gray-500">5x12</p></div>
+                    <a href="https://youtube.com/shorts/uvH8ZVB3ZRw?si=xaNrMWq7Q3tMRVkG" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</a>
+                </div>
+                <div class="exercise-card">
+                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
+                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Banco abdutor (inclinação de tronco)</h3><p class="text-sm text-gray-500">5xdrop</p></div>
+                    <a href="https://youtube.com/shorts/f3IYhqn9l_8?si=3GRiFQJUQggQnKs5" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</a>
+                </div>
+            </div>
+            
+            <h2 class="section-title">Lombar</h2>
+             <div class="space-y-4">
+                 <div class="exercise-card">
+                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
+                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Extensão de tronco no solo</h3><p class="text-sm text-gray-500">3x12</p></div>
+                    <a href="https://youtube.com/shorts/kYxZFALfaCs?si=X8-6u6KPII7Ddb-x" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</a>
                 </div>
             </div>
         </div>
 
         <!-- Ficha C Content -->
         <div id="fichaC" class="tab-content">
-            <div class="space-y-4">
-                <div class="bg-white p-4 rounded-xl shadow-lg border border-gray-200 flex items-center space-x-4">
-                    <div class="flex-shrink-0 bg-red-100 p-3 rounded-full">
-                        <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                    </div>
-                    <div class="flex-1">
-                        <h3 class="font-semibold text-gray-900">Banco flexor & Stiff</h3>
-                        <p class="text-sm text-gray-500">4x12 (alternado)</p>
-                    </div>
-                    <a href="https://youtube.com/shorts/gTQQ8etNnPA?si=c7N3kQ2QYmO9mPcp" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Ver Vídeo</a>
+             <h2 class="section-title">Pernas (Posterior & Adutores)</h2>
+             <div class="space-y-4">
+                <div class="exercise-card">
+                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
+                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Banco flexor + Stiff</h3><p class="text-sm text-gray-500">4x12 (alternar)</p></div>
+                    <a href="https://youtube.com/shorts/gTQQ8etNnPA?si=c7N3kQ2QYmO9mPcp" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</a>
                 </div>
-                <div class="bg-white p-4 rounded-xl shadow-lg border border-gray-200 flex items-center space-x-4">
-                    <div class="flex-shrink-0 bg-red-100 p-3 rounded-full">
-                        <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9.5M15 9.5V19m0-9.5a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path></svg>
-                    </div>
-                    <div class="flex-1">
-                        <h3 class="font-semibold text-gray-900">Panturrilha leg 45 & Jump</h3>
-                        <p class="text-sm text-gray-500">3x15 + 40s (alternado)</p>
-                    </div>
-                    <a href="https://youtube.com/shorts/erUNxqpFxkc?si=fehOOxIghTnCBk6A" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Ver Vídeo</a>
+                <div class="exercise-card">
+                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
+                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Flexão de joelhos com caneleira deitado</h3><p class="text-sm text-gray-500">4x12 (empurra normal e desce segurando 4s)</p></div>
+                    <a href="https://youtube.com/shorts/q6qKXKGXWoA?si=CSuln3z2SZld6W2s" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</a>
                 </div>
-                 <div class="bg-white p-4 rounded-xl shadow-lg border border-gray-200 flex items-center space-x-4">
-                    <div class="flex-shrink-0 bg-purple-100 p-3 rounded-full">
-                        <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                    </div>
-                    <div class="flex-1">
-                        <h3 class="font-semibold text-gray-900">Rosca direta no cross over</h3>
-                        <p class="text-sm text-gray-500">4x12 (empurra normal e desce segurando 4s)</p>
-                    </div>
-                    <a href="https://youtube.com/shorts/e6yZ8_iv4GI?si=TkiA4JNYx2JIx6nZ" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Ver Vídeo</a>
+                <div class="exercise-card">
+                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
+                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Banco adutor</h3><p class="text-sm text-gray-500">4xdrop</p></div>
+                    <a href="https://youtube.com/shorts/WE3siaiLFxQ?si=qojNV9ZeH_b6x5RN" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</a>
+                </div>
+             </div>
+
+             <h2 class="section-title">Panturrilhas</h2>
+             <div class="space-y-4">
+                <div class="exercise-card">
+                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
+                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Panturrilha leg 45 + Jump</h3><p class="text-sm text-gray-500">3x15 + 40s (alternar)</p></div>
+                    <a href="https://youtube.com/shorts/erUNxqpFxkc?si=fehOOxIghTnCBk6A" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</a>
+                </div>
+                 <div class="exercise-card">
+                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
+                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Panturrilha unilateral com halter + Jump</h3><p class="text-sm text-gray-500">3x15 + 40s (alternar)</p></div>
+                    <a href="https://youtube.com/shorts/wyxIL7484io?si=y4pP7VcZbE9CAa3c" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</a>
+                </div>
+                <div class="exercise-card">
+                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
+                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Panturrilha agachado</h3><p class="text-sm text-gray-500">3x15</p></div>
+                    <a href="https://youtu.be/-IzaDOwQz2Q?si=zpDyxr9-0hKqniva" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</a>
+                </div>
+             </div>
+             
+             <h2 class="section-title">Braços</h2>
+             <div class="space-y-4">
+                <div class="exercise-card">
+                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
+                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Rosca direta no cross over</h3><p class="text-sm text-gray-500">4x12 (empurra normal e desce segurando 4s)</p></div>
+                    <a href="https://youtube.com/shorts/e6yZ8_iv4GI?si=TkiA4JNYx2JIx6nZ" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</a>
+                </div>
+                <div class="exercise-card">
+                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
+                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Rosca arnold no crossover</h3><p class="text-sm text-gray-500">3xdrop</p></div>
+                    <a href="https://youtube.com/shorts/uuBE42UFcVo?si=BTtt6wURLCQlce4p" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</a>
+                </div>
+                <div class="exercise-card">
+                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
+                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Rosca francesa no crossover bilateral</h3><p class="text-sm text-gray-500">4x12</p></div>
+                    <a href="https://youtube.com/shorts/r9fR94bp9JQ?si=Eg9EvtgoLIfyo_WU" target="_blank" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</a>
                 </div>
             </div>
         </div>
