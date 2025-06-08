@@ -1,82 +1,82 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ficha de Treino Editável</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Link para seu arquivo de CSS -->
-    <link rel="stylesheet" href="style.css">
-</head>
-<body class="bg-gray-100 text-gray-800">
+    <!DOCTYPE html>
+    <html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Ficha de Treino</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body class="bg-gray-100 text-gray-800">
 
-    <div class="container mx-auto p-4 sm:p-6 lg:p-8 max-w-4xl">
-        <header class="text-center mb-8">
-            <h1 class="text-3xl sm:text-4xl font-bold text-gray-900">Plano de Treino</h1>
-            <p id="plan-subtitle" class="text-lg text-gray-600 mt-1"></p>
-        </header>
+        <div class="container mx-auto p-4 sm:p-6 lg:p-8 max-w-4xl">
+            <header class="text-center mb-8">
+                <h1 class="text-3xl sm:text-4xl font-bold text-gray-900">Plano de Treino</h1>
+                <p id="plan-subtitle" class="text-lg text-gray-600 mt-1"></p>
+            </header>
+            
+            <div id="auth-container" class="text-center mb-8">
+                <div id="user-info" class="hidden items-center justify-center space-x-4">
+                    <p id="user-name" class="text-gray-700 font-medium"></p>
+                    <button id="logout-button" class="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition-colors">Sair</button>
+                </div>
+                <button id="login-button" class="bg-white text-gray-700 py-2 px-6 rounded-lg font-semibold hover:bg-gray-50 transition-colors shadow-lg border flex items-center justify-center mx-auto">
+                    <svg class="w-6 h-6 mr-3" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8c-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4C12.955 4 4 12.955 4 24s8.955 20 20 20s20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"></path><path fill="#FF3D00" d="M6.306 14.691c-1.229 2.525-1.927 5.382-1.927 8.5C4.379 33.424 8.717 38 14.004 38c2.903 0 5.613-1.031 7.766-2.768L14.65 28.115C11.599 28.536 8.522 26.386 8.522 23.01c0-1.423.559-2.735 1.476-3.729l-3.692-3.59z"></path><path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.91 11.91 0 0 1 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z"></path><path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303c-0.792 2.237-2.231 4.166-4.087 5.574l6.19 5.238C39.991 35.636 44 29.598 44 24c0-1.341-0.138-2.65-.389-3.917z"></path></svg>
+                    Login com Google
+                </button>
+            </div>
+
+            <div id="personal-dashboard" class="hidden mb-8 p-4 bg-white rounded-lg shadow">
+                <h2 class="text-xl font-bold mb-2">Painel do Personal</h2>
+                <p class="mb-2">Seu código para compartilhar com alunos: <strong id="personal-code" class="select-all bg-gray-200 p-1 rounded"></strong></p>
+                <label for="student-selector" class="block mb-2 font-medium">Selecione um aluno para gerenciar:</label>
+                <select id="student-selector" class="w-full p-2 border rounded-md"></select>
+            </div>
+
+            <div id="app-container" class="hidden">
+                <div id="tabs-container" class="flex justify-center flex-wrap items-center gap-4 mb-8"></div>
+                <div id="main-content-container"></div>
+            </div>
+        </div>
         
-         <!-- Auth Container -->
-        <div id="auth-container" class="text-center mb-8">
-            <div id="user-info" class="hidden items-center justify-center space-x-4">
-                <p id="user-name" class="text-gray-700 font-medium"></p>
-                <button id="logout-button" class="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition-colors">Sair</button>
-            </div>
-            <button id="login-button" class="bg-white text-gray-700 py-2 px-6 rounded-lg font-semibold hover:bg-gray-50 transition-colors shadow-lg border flex items-center justify-center mx-auto">
-                <svg class="w-6 h-6 mr-3" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8c-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4C12.955 4 4 12.955 4 24s8.955 20 20 20s20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"></path><path fill="#FF3D00" d="M6.306 14.691c-1.229 2.525-1.927 5.382-1.927 8.5C4.379 33.424 8.717 38 14.004 38c2.903 0 5.613-1.031 7.766-2.768L14.65 28.115C11.599 28.536 8.522 26.386 8.522 23.01c0-1.423.559-2.735 1.476-3.729l-3.692-3.59z"></path><path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.91 11.91 0 0 1 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z"></path><path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303c-0.792 2.237-2.231 4.166-4.087 5.574l6.19 5.238C39.991 35.636 44 29.598 44 24c0-1.341-0.138-2.65-.389-3.917z"></path></svg>
-                Login com Google
-            </button>
-        </div>
-
-        <!-- App Container -->
-        <div id="app-container" class="hidden">
-            <div id="tabs-container" class="flex justify-center flex-wrap items-center gap-4 mb-8">
-                 <!-- Tab buttons will be rendered here by JS -->
-            </div>
-
-            <div id="main-content-container">
-                <!-- Tab content will be rendered here by JS -->
+        <div id="videoModal" class="fixed inset-0 bg-black bg-opacity-75 hidden justify-center items-center z-50" onclick="closeModal('videoModal')">
+            <div class="bg-black p-1 rounded-lg w-full max-w-3xl relative" onclick="event.stopPropagation()">
+                <button onclick="closeModal('videoModal')" class="absolute -top-8 -right-2 text-white text-4xl">&times;</button>
+                <div class="aspect-video"><iframe id="videoFrame" class="w-full h-full" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
             </div>
         </div>
-    </div>
-    
-    <!-- Video Modal -->
-    <div id="videoModal" class="fixed inset-0 bg-black bg-opacity-75 hidden justify-center items-center z-50 p-4 transition-opacity duration-300" onclick="closeModal('videoModal')">
-        <div class="bg-black p-1 sm:p-2 rounded-lg shadow-xl w-full max-w-3xl relative" onclick="event.stopPropagation()">
-            <button onclick="closeModal('videoModal')" class="absolute -top-2 -right-2 sm:top-0 sm:-right-8 text-white text-4xl font-bold">&times;</button>
-            <div class="aspect-video">
-                <iframe id="videoFrame" class="w-full h-full rounded-md" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-            </div>
-        </div>
-    </div>
 
-    <!-- Add Exercise Modal -->
-    <div id="exerciseModal" class="fixed inset-0 bg-black bg-opacity-75 hidden justify-center items-center z-50 p-4" onclick="closeModal('exerciseModal')">
-        <div class="bg-white p-6 rounded-lg shadow-xl w-full max-w-md relative" onclick="event.stopPropagation()">
-            <h3 class="text-lg font-bold mb-4">Adicionar Novo Exercício</h3>
-            <div class="space-y-4">
-                <div>
-                    <label for="new-exercise-name" class="block text-sm font-medium text-gray-700">Exercício</label>
-                    <input type="text" id="new-exercise-name" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Ex: Supino Reto">
+        <div id="exerciseModal" class="fixed inset-0 bg-black bg-opacity-75 hidden justify-center items-center z-50" onclick="closeModal('exerciseModal')">
+            <div class="bg-white p-6 rounded-lg w-full max-w-md relative" onclick="event.stopPropagation()">
+                <h3 class="text-lg font-bold mb-4">Adicionar Exercício</h3>
+                <div class="space-y-4">
+                    <div><label for="new-exercise-name" class="block text-sm font-medium">Exercício</label><input type="text" id="new-exercise-name" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"></div>
+                    <div><label for="new-exercise-details" class="block text-sm font-medium">Descrição</label><input type="text" id="new-exercise-details" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"></div>
+                    <div><label for="new-exercise-video" class="block text-sm font-medium">Link do Vídeo</label><input type="text" id="new-exercise-video" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"></div>
                 </div>
-                <div>
-                    <label for="new-exercise-details" class="block text-sm font-medium text-gray-700">Descrição (Séries/Reps)</label>
-                    <input type="text" id="new-exercise-details" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Ex: 3x12">
-                </div>
-                 <div>
-                    <label for="new-exercise-video" class="block text-sm font-medium text-gray-700">Link do Vídeo</label>
-                    <input type="text" id="new-exercise-video" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="https://youtube.com/...">
+                <div class="mt-6 flex justify-end space-x-3">
+                    <button type="button" onclick="closeModal('exerciseModal')" class="bg-gray-200 py-2 px-4 rounded-lg">Cancelar</button>
+                    <button type="button" onclick="saveNewExercise()" class="bg-blue-600 text-white py-2 px-4 rounded-lg">Salvar</button>
                 </div>
             </div>
-            <div class="mt-6 flex justify-end space-x-3">
-                <button type="button" onclick="closeModal('exerciseModal')" class="bg-gray-200 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-300">Cancelar</button>
-                <button type="button" onclick="saveNewExercise()" class="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700">Salvar Exercício</button>
+        </div>
+
+        <div id="role-modal" class="fixed inset-0 bg-black bg-opacity-75 hidden justify-center items-center z-50 p-4">
+            <div class="bg-white p-6 rounded-lg w-full max-w-md text-center">
+                <h3 class="text-xl font-bold mb-4">Bem-vindo! Qual é o seu perfil?</h3>
+                <div id="role-choice-buttons" class="flex justify-center gap-4">
+                    <button id="aluno-btn" class="bg-blue-600 text-white py-2 px-6 rounded-lg">Sou Aluno</button>
+                    <button id="personal-btn" class="bg-green-600 text-white py-2 px-6 rounded-lg">Sou Personal</button>
+                </div>
+                <div id="personal-code-input-div" class="hidden mt-4">
+                    <label for="personal-code-input" class="block mb-2 font-medium">Digite o código do seu Personal Trainer:</label>
+                    <input type="text" id="personal-code-input" class="block w-full border-gray-300 rounded-md shadow-sm p-2 text-center">
+                    <button id="link-personal-btn" class="mt-4 bg-blue-600 text-white py-2 px-6 rounded-lg">Vincular</button>
+                </div>
             </div>
         </div>
-    </div>
-
-    <!-- Link para seu arquivo de JavaScript -->
-    <script type="module" src="script.js"></script>
-</body>
-</html>
+        
+        <script type="module" src="script.js"></script>
+    </body>
+    </html>
