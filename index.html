@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ficha de Treino - Moisés (Mês 06)</title>
+    <title>Ficha de Treino Editável - Moisés (Mês 06)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -11,7 +11,7 @@
             font-family: 'Inter', sans-serif;
         }
         .tab-button.active {
-            background-color: #1d4ed8; /* blue-700 */
+            background-color: #1d4ed8;
             color: white;
             box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
         }
@@ -30,250 +30,92 @@
             display: flex;
             align-items: center;
             gap: 1rem;
+            position: relative;
         }
         .section-title {
-            font-size: 1.25rem; /* text-xl */
-            font-weight: 600; /* font-semibold */
-            color: #111827; /* gray-900 */
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #111827;
             margin-top: 2rem;
             margin-bottom: 1rem;
             padding-bottom: 0.5rem;
-            border-bottom: 2px solid #d1d5db; /* gray-300 */
+            border-bottom: 2px solid #d1d5db;
+        }
+        [contenteditable]:focus {
+            outline: 2px solid #3b82f6;
+            background-color: #eff6ff;
+            border-radius: 4px;
+        }
+        .delete-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            cursor: pointer;
+            color: #ef4444;
+            display: none;
+        }
+        .exercise-card:hover .delete-btn {
+            display: block;
+        }
+        .notification {
+            transition: opacity 0.5s, transform 0.5s;
         }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800">
 
     <div class="container mx-auto p-4 sm:p-6 lg:p-8 max-w-4xl">
-        <!-- Header -->
         <header class="text-center mb-8">
-            <h1 class="text-3xl sm:text-4xl font-bold text-gray-900">Plano de Treino</h1>
+            <h1 class="text-3xl sm:text-4xl font-bold text-gray-900">Plano de Treino Editável</h1>
             <p class="text-lg text-gray-600 mt-1">Moisés - Mês 06</p>
         </header>
-
-        <!-- Tab Buttons -->
-        <div class="flex justify-center space-x-2 sm:space-x-4 mb-8">
-            <button onclick="showTab('fichaA')" id="btn-fichaA" class="tab-button active flex-1 sm:flex-none text-center py-2 px-4 font-semibold rounded-lg shadow-md transition-all duration-300 bg-white text-gray-700 hover:bg-gray-200">Ficha A</button>
-            <button onclick="showTab('fichaB')" id="btn-fichaB" class="tab-button flex-1 sm:flex-none text-center py-2 px-4 font-semibold rounded-lg shadow-md transition-all duration-300 bg-white text-gray-700 hover:bg-gray-200">Ficha B</button>
-            <button onclick="showTab('fichaC')" id="btn-fichaC" class="tab-button flex-1 sm:flex-none text-center py-2 px-4 font-semibold rounded-lg shadow-md transition-all duration-300 bg-white text-gray-700 hover:bg-gray-200">Ficha C</button>
+        
+        <!-- Auth Container -->
+        <div id="auth-container" class="text-center mb-8">
+            <div id="user-info" class="hidden items-center justify-center space-x-4">
+                <p id="user-name" class="text-gray-700 font-medium"></p>
+                <button id="logout-button" class="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition-colors">Sair</button>
+            </div>
+            <button id="login-button" class="bg-white text-gray-700 py-2 px-6 rounded-lg font-semibold hover:bg-gray-50 transition-colors shadow-lg border flex items-center justify-center mx-auto">
+                <svg class="w-6 h-6 mr-3" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8c-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4C12.955 4 4 12.955 4 24s8.955 20 20 20s20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"></path><path fill="#FF3D00" d="M6.306 14.691c-1.229 2.525-1.927 5.382-1.927 8.5C4.379 33.424 8.717 38 14.004 38c2.903 0 5.613-1.031 7.766-2.768L14.65 28.115C11.599 28.536 8.522 26.386 8.522 23.01c0-1.423.559-2.735 1.476-3.729l-3.692-3.59z"></path><path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.91 11.91 0 0 1 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z"></path><path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303c-0.792 2.237-2.231 4.166-4.087 5.574l6.19 5.238C39.991 35.636 44 29.598 44 24c0-1.341-0.138-2.65-0.389-3.917z"></path></svg>
+                Login com Google
+            </button>
         </div>
-
-        <!-- Ficha A Content -->
-        <div id="fichaA" class="tab-content active">
-            <h2 class="section-title">Peito</h2>
-            <div class="space-y-4">
-                <div class="exercise-card">
-                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
-                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Supino reto com halter</h3><p class="text-sm text-gray-500">3x12 (empurra normal e desce segurando 4s)</p></div>
-                    <button onclick="openModal('https://youtube.com/shorts/5IoHFiaAHb8?si=rkUx-2xACjwp7JRs')" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</button>
-                </div>
-                <div class="exercise-card">
-                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
-                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Supino 45 no guiado (ou barra livre)</h3><p class="text-sm text-gray-500">3x12</p></div>
-                    <button onclick="openModal('https://youtube.com/shorts/EzEv5hcFixE?si=uQIm0n6y5qeirLR8')" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</button>
-                </div>
-                <div class="exercise-card">
-                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
-                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Crucifixo reto em pé (crossover)</h3><p class="text-sm text-gray-500">3x12 (empurra normal e desce segurando 4s)</p></div>
-                    <button onclick="openModal('https://youtube.com/shorts/Stq2LvCaUS8?si=ZtMjEzL1CqEoFREB')" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</button>
-                </div>
-                <div class="exercise-card">
-                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
-                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Supino declinado em pé (crossover)</h3><p class="text-sm text-gray-500">3x12</p></div>
-                    <button onclick="openModal('https://youtube.com/shorts/buMMcTPdRlM?si=M7IKMlZfG9WWY1fR')" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</button>
-                </div>
-            </div>
-            
-            <h2 class="section-title">Costas & Ombros</h2>
-            <div class="space-y-4">
-                 <div class="exercise-card">
-                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
-                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Remada alta no guiado</h3><p class="text-sm text-gray-500">3x12 (empurra normal e desce segurando 4s)</p></div>
-                    <button onclick="openModal('https://youtube.com/shorts/LXa0IvLV_gg?si=8wcH_LgLWoc-HzOi')" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</button>
-                </div>
-                <div class="exercise-card">
-                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
-                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Abdução de ombros no crossover</h3><p class="text-sm text-gray-500">3x12</p></div>
-                    <button onclick="openModal('https://youtube.com/shorts/JhS8qt4PASc?si=J9qaDz4AfEpSisXc')" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</button>
-                </div>
-                <div class="exercise-card">
-                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
-                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Desenvolvimento livre com barra</h3><p class="text-sm text-gray-500">3x12</p></div>
-                    <button onclick="openModal('https://youtube.com/shorts/QJ52sSpG7nc?si=ZLpZN8anS2N5BHWP')" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</button>
-                </div>
-                <div class="exercise-card">
-                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
-                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Crucifixo invertido no crossover</h3><p class="text-sm text-gray-500">3xdrop</p></div>
-                    <button onclick="openModal('https://youtube.com/shorts/Z_WWNHS4F_E?si=NVc1CsGdBKAa6Vd9')" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</button>
-                </div>
+        
+        <!-- App Container -->
+        <div id="app-container" class="hidden">
+            <div class="text-center mb-6">
+                <button onclick="saveAllWorkouts()" class="bg-green-600 text-white py-2 px-6 rounded-lg font-semibold hover:bg-green-700 transition-colors shadow-lg">
+                    Salvar Alterações
+                </button>
             </div>
 
-            <h2 class="section-title">Tríceps</h2>
-             <div class="space-y-4">
-                <div class="exercise-card">
-                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
-                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Tríceps Francês com Halter</h3><p class="text-sm text-gray-500">3x12</p></div>
-                    <button onclick="openModal('https://youtube.com/shorts/Az2p67i6rAc?si=cAOCCGBJMj8t42y8')" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</button>
-                </div>
-                <div class="exercise-card">
-                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
-                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Tríceps testa deitado</h3><p class="text-sm text-gray-500">3x12 (empurra normal e desce segurando 4s)</p></div>
-                    <button onclick="openModal('https://youtube.com/shorts/RKUtFDw4tV0?si=UrS5HWFESMqmkcRf')" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</button>
-                </div>
-                <div class="exercise-card">
-                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
-                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Tríceps crossover</h3><p class="text-sm text-gray-500">3xdrop</p></div>
-                    <button onclick="openModal('https://youtube.com/shorts/lSxu5skqVgs?si=RT4nqf5AoYaIh7kM')" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</button>
-                </div>
-                <div class="exercise-card">
-                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
-                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Tríceps coice unilateral</h3><p class="text-sm text-gray-500">3x12</p></div>
-                    <button onclick="openModal('https://youtu.be/ij2XqG6HhjA?si=-lmSz7jX_CBeNpKr')" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</button>
-                </div>
+            <div class="flex justify-center space-x-2 sm:space-x-4 mb-8">
+                <button onclick="showTab('fichaA')" id="btn-fichaA" class="tab-button active flex-1 sm:flex-none text-center py-2 px-4 font-semibold rounded-lg shadow-md transition-all duration-300 bg-white text-gray-700 hover:bg-gray-200">Ficha A</button>
+                <button onclick="showTab('fichaB')" id="btn-fichaB" class="tab-button flex-1 sm:flex-none text-center py-2 px-4 font-semibold rounded-lg shadow-md transition-all duration-300 bg-white text-gray-700 hover:bg-gray-200">Ficha B</button>
+                <button onclick="showTab('fichaC')" id="btn-fichaC" class="tab-button flex-1 sm:flex-none text-center py-2 px-4 font-semibold rounded-lg shadow-md transition-all duration-300 bg-white text-gray-700 hover:bg-gray-200">Ficha C</button>
             </div>
 
-            <h2 class="section-title">Abdômen & Lombar</h2>
-            <div class="space-y-4">
-                 <div class="exercise-card">
-                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
-                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Abdominal canivete</h3><p class="text-sm text-gray-500">3x20</p></div>
-                    <button onclick="openModal('https://youtube.com/shorts/XmZBaw8usgo?si=BFKBCy4aqdDqCLub')" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</button>
-                </div>
-                <div class="exercise-card">
-                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
-                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Extensão de tronco no solo</h3><p class="text-sm text-gray-500">3x20</p></div>
-                    <button onclick="openModal('https://youtube.com/shorts/kYxZFALfaCs?si=cnht5hABtjDzkmMj')" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</button>
-                </div>
-            </div>
+            <div id="fichaA" class="tab-content active"></div>
+            <div id="fichaB" class="tab-content"></div>
+            <div id="fichaC" class="tab-content"></div>
         </div>
-
-        <!-- Ficha B Content -->
-        <div id="fichaB" class="tab-content">
-            <h2 class="section-title">Costas</h2>
-            <div class="space-y-4">
-                <div class="exercise-card">
-                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
-                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Remada baixa pegada neutra</h3><p class="text-sm text-gray-500">3x12</p></div>
-                    <button onclick="openModal('https://youtube.com/shorts/4jPBu3JxIJA?si=PV45ZaY-fz-t4Jcp')" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</button>
-                </div>
-                <div class="exercise-card">
-                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
-                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Puley pegada supinada</h3><p class="text-sm text-gray-500">3x12 (empurra normal e desce segurando 4s)</p></div>
-                    <button onclick="openModal('https://youtube.com/shorts/NUlKQwuia0c?si=N928L4xbu00WdVol')" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</button>
-                </div>
-                <div class="exercise-card">
-                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
-                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Polldown</h3><p class="text-sm text-gray-500">3xdrop</p></div>
-                    <button onclick="openModal('https://youtube.com/shorts/mbBBiOwPKjc?si=UZmtXbE6XGIPRrUJ')" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</button>
-                </div>
-                <div class="exercise-card">
-                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
-                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Puley frente</h3><p class="text-sm text-gray-500">3x12 (empurra normal e desce segurando 4s)</p></div>
-                    <button onclick="openModal('https://youtube.com/shorts/x6EtG_TvuiQ?si=TS9kYI7Fih1Qg1Fo')" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</button>
-                </div>
+    </div>
+    
+    <!-- Notifications -->
+    <div id="toast" class="notification fixed bottom-5 right-5 bg-green-500 text-white py-2 px-4 rounded-lg shadow-xl opacity-0 transform translate-y-2">
+        Salvo com sucesso!
+    </div>
+    <div id="error-notification" class="notification hidden fixed top-5 right-5 bg-red-500 text-white p-4 rounded-lg shadow-xl max-w-sm z-50">
+        <div class="flex justify-between items-start">
+            <div>
+                <h4 class="font-bold">Erro de Configuração</h4>
+                <p id="error-message" class="mt-2 text-sm"></p>
             </div>
-
-            <h2 class="section-title">Pernas & Glúteos</h2>
-            <div class="space-y-4">
-                <div class="exercise-card">
-                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
-                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Leg 45</h3><p class="text-sm text-gray-500">3x12 (empurra normal e desce segurando 4s)</p></div>
-                    <button onclick="openModal('https://youtube.com/shorts/5Pm33Q5w4MM?si=ps7qNFEwNdW6t_ug')" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</button>
-                </div>
-                <div class="exercise-card">
-                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
-                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Banco extensor alternado</h3><p class="text-sm text-gray-500">3x12</p></div>
-                    <button onclick="openModal('https://youtube.com/shorts/A7_fRPbrIUM?si=j4RVQQrZrqdTIoxr')" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</button>
-                </div>
-                <div class="exercise-card">
-                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
-                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Afundo no guiado + Búlgaro</h3><p class="text-sm text-gray-500">3x12 (alternar)</p></div>
-                    <button onclick="openModal('https://youtube.com/shorts/LFph9adCL8Y?si=yKnaCW6Ra3fveYYt')" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</button>
-                </div>
-                <div class="exercise-card">
-                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
-                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Elevação pélvica</h3><p class="text-sm text-gray-500">5x12</p></div>
-                    <button onclick="openModal('https://youtube.com/shorts/uvH8ZVB3ZRw?si=xaNrMWq7Q3tMRVkG')" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</button>
-                </div>
-                <div class="exercise-card">
-                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
-                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Banco abdutor (inclinação de tronco)</h3><p class="text-sm text-gray-500">5xdrop</p></div>
-                    <button onclick="openModal('https://youtube.com/shorts/f3IYhqn9l_8?si=3GRiFQJUQggQnKs5')" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</button>
-                </div>
-            </div>
-            
-            <h2 class="section-title">Lombar</h2>
-             <div class="space-y-4">
-                 <div class="exercise-card">
-                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
-                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Extensão de tronco no solo</h3><p class="text-sm text-gray-500">3x12</p></div>
-                    <button onclick="openModal('https://youtube.com/shorts/kYxZFALfaCs?si=X8-6u6KPII7Ddb-x')" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Ficha C Content -->
-        <div id="fichaC" class="tab-content">
-             <h2 class="section-title">Pernas (Posterior & Adutores)</h2>
-             <div class="space-y-4">
-                <div class="exercise-card">
-                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
-                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Banco flexor + Stiff</h3><p class="text-sm text-gray-500">4x12 (alternar)</p></div>
-                    <button onclick="openModal('https://youtube.com/shorts/gTQQ8etNnPA?si=c7N3kQ2QYmO9mPcp')" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</button>
-                </div>
-                <div class="exercise-card">
-                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
-                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Flexão de joelhos com caneleira deitado</h3><p class="text-sm text-gray-500">4x12 (empurra normal e desce segurando 4s)</p></div>
-                    <button onclick="openModal('https://youtube.com/shorts/q6qKXKGXWoA?si=CSuln3z2SZld6W2s')" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</button>
-                </div>
-                <div class="exercise-card">
-                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
-                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Banco adutor</h3><p class="text-sm text-gray-500">4xdrop</p></div>
-                    <button onclick="openModal('https://youtube.com/shorts/WE3siaiLFxQ?si=qojNV9ZeH_b6x5RN')" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</button>
-                </div>
-             </div>
-
-             <h2 class="section-title">Panturrilhas</h2>
-             <div class="space-y-4">
-                <div class="exercise-card">
-                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
-                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Panturrilha leg 45 + Jump</h3><p class="text-sm text-gray-500">3x15 + 40s (alternar)</p></div>
-                    <button onclick="openModal('https://youtube.com/shorts/erUNxqpFxkc?si=fehOOxIghTnCBk6A')" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</button>
-                </div>
-                 <div class="exercise-card">
-                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
-                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Panturrilha unilateral com halter + Jump</h3><p class="text-sm text-gray-500">3x15 + 40s (alternar)</p></div>
-                    <button onclick="openModal('https://youtube.com/shorts/wyxIL7484io?si=y4pP7VcZbE9CAa3c')" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</button>
-                </div>
-                <div class="exercise-card">
-                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
-                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Panturrilha agachado</h3><p class="text-sm text-gray-500">3x15</p></div>
-                    <button onclick="openModal('https://youtu.be/-IzaDOwQz2Q?si=zpDyxr9-0hKqniva')" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</button>
-                </div>
-             </div>
-             
-             <h2 class="section-title">Braços</h2>
-             <div class="space-y-4">
-                <div class="exercise-card">
-                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
-                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Rosca direta no cross over</h3><p class="text-sm text-gray-500">4x12 (empurra normal e desce segurando 4s)</p></div>
-                    <button onclick="openModal('https://youtube.com/shorts/e6yZ8_iv4GI?si=TkiA4JNYx2JIx6nZ')" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</button>
-                </div>
-                <div class="exercise-card">
-                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
-                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Rosca arnold no crossover</h3><p class="text-sm text-gray-500">3xdrop</p></div>
-                    <button onclick="openModal('https://youtube.com/shorts/uuBE42UFcVo?si=BTtt6wURLCQlce4p')" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</button>
-                </div>
-                <div class="exercise-card">
-                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
-                    <div class="flex-1"><h3 class="font-semibold text-gray-900">Rosca francesa no crossover bilateral</h3><p class="text-sm text-gray-500">4x12</p></div>
-                    <button onclick="openModal('https://youtube.com/shorts/r9fR94bp9JQ?si=Eg9EvtgoLIfyo_WU')" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors">Vídeo</button>
-                </div>
-            </div>
+            <button onclick="hideErrorNotification()" class="ml-4 text-white text-2xl font-bold leading-none">&times;</button>
         </div>
     </div>
 
-    <!-- Modal -->
     <div id="videoModal" class="fixed inset-0 bg-black bg-opacity-75 hidden justify-center items-center z-50 p-4 transition-opacity duration-300" onclick="closeModal()">
         <div class="bg-black p-1 sm:p-2 rounded-lg shadow-xl w-full max-w-3xl relative" onclick="event.stopPropagation()">
             <button onclick="closeModal()" class="absolute -top-2 -right-2 sm:top-0 sm:-right-8 text-white text-4xl font-bold">&times;</button>
@@ -283,38 +125,228 @@
         </div>
     </div>
 
-    <script>
-        function showTab(tabId) {
-            const contents = document.querySelectorAll('.tab-content');
-            contents.forEach(content => content.style.display = 'none');
-            document.getElementById(tabId).style.display = 'block';
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-            const buttons = document.querySelectorAll('.tab-button');
-            buttons.forEach(button => button.classList.remove('active'));
+        const firebaseConfig = typeof __firebase_config !== 'undefined'
+            ? JSON.parse(__firebase_config)
+            : { apiKey: "FALLBACK_API_KEY", authDomain: "FALLBACK_AUTH_DOMAIN", projectId: "FALLBACK_PROJECT_ID" };
+
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        
+        let userId;
+
+        const defaultWorkout = {
+            fichaA: {"Peito": [{ name: "Supino reto com halter", details: '3x12 (empurra normal e desce segurando 4s)', video: 'https://youtube.com/shorts/5IoHFiaAHb8' },{ name: "Supino 45 no guiado", details: '3x12', video: 'https://youtube.com/shorts/EzEv5hcFixE' }],"Costas & Ombros": [{ name: "Remada alta no guiado", details: '3x12 (empurra normal e desce segurando 4s)', video: 'https://youtube.com/shorts/LXa0IvLV_gg' }], "Tríceps": [{ name: "Tríceps Francês com Halter", details: '3x12', video: 'https://youtube.com/shorts/Az2p67i6rAc' }], "Abdômen & Lombar": [{ name: "Abdominal canivete", details: '3x20', video: 'https://youtube.com/shorts/XmZBaw8usgo' }]},
+            fichaB: {"Costas": [{ name: "Remada baixa pegada neutra", details: '3x12', video: 'https://youtube.com/shorts/4jPBu3JxIJA' }], "Pernas & Glúteos": [{ name: "Leg 45", details: '3x12 (empurra normal e desce segurando 4s)', video: 'https://youtube.com/shorts/5Pm33Q5w4MM' }]},
+            fichaC: {"Pernas (Posterior & Adutores)": [{ name: "Banco flexor + Stiff", details: '4x12 (alternar)', video: 'https://youtube.com/shorts/gTQQ8etNnPA' }], "Panturrilhas": [{ name: "Panturrilha leg 45 + Jump", details: '3x15 + 40s (alternar)', video: 'https://youtube.com/shorts/erUNxqpFxkc' }], "Braços": [{ name: "Rosca direta no cross over", details: '4x12 (empurra normal e desce segurando 4s)', video: 'https://youtube.com/shorts/e6yZ8_iv4GI' }]}
+        };
+        
+        const loginButton = document.getElementById('login-button');
+        const logoutButton = document.getElementById('logout-button');
+        const userInfo = document.getElementById('user-info');
+        const userNameEl = document.getElementById('user-name');
+        const appContainer = document.getElementById('app-container');
+
+        const provider = new GoogleAuthProvider();
+
+        async function signInWithGoogle() {
+            try {
+                await signInWithPopup(auth, provider);
+                hideErrorNotification();
+            } catch (error) {
+                console.error("Erro ao fazer login com Google:", error);
+                if (error.code === 'auth/unauthorized-domain') {
+                    showErrorNotification(
+                        `O domínio <strong>${window.location.hostname}</strong> não está autorizado para login.`,
+                        `Vá para o seu console do Firebase -> Authentication -> Settings -> Authorized domains e adicione este domínio.`
+                    );
+                }
+            }
+        }
+
+        async function logOut() {
+            try {
+                await signOut(auth);
+            } catch (error) {
+                console.error("Erro ao fazer logout:", error);
+            }
+        }
+        
+        loginButton.addEventListener('click', signInWithGoogle);
+        logoutButton.addEventListener('click', logOut);
+
+        onAuthStateChanged(auth, user => {
+            if (user) {
+                userId = user.uid;
+                userNameEl.textContent = `Logado como: ${user.displayName || user.email}`;
+                userInfo.classList.remove('hidden');
+                userInfo.classList.add('flex');
+                loginButton.classList.add('hidden');
+                appContainer.classList.remove('hidden');
+                loadWorkout(userId);
+            } else {
+                userId = null;
+                userInfo.classList.add('hidden');
+                userInfo.classList.remove('flex');
+                loginButton.classList.remove('hidden');
+                appContainer.classList.add('hidden');
+                ['fichaA', 'fichaB', 'fichaC'].forEach(id => document.getElementById(id).innerHTML = '');
+            }
+        });
+
+        function loadWorkout(uid) {
+            const docRef = doc(db, `artifacts/${appId}/users/${uid}/workout`, 'data');
+            onSnapshot(docRef, (docSnap) => {
+                const workoutData = docSnap.exists() ? docSnap.data().plan : defaultWorkout;
+                renderWorkout(workoutData);
+                showTab('fichaA');
+            });
+        }
+        
+        function renderWorkout(workout) {
+            if (!workout) {
+                console.error("Dados de treino inválidos para renderizar.");
+                return;
+            }
+            for (const fichaId in workout) {
+                const fichaContainer = document.getElementById(fichaId);
+                if (!fichaContainer) continue;
+                fichaContainer.innerHTML = '';
+                const sections = workout[fichaId];
+
+                for(const sectionTitle in sections) {
+                    const sectionEl = document.createElement('div');
+                    sectionEl.innerHTML = `<h2 class="section-title">${sectionTitle}</h2>`;
+                    const exercisesContainer = document.createElement('div');
+                    exercisesContainer.className = 'space-y-4';
+                    
+                    const sectionId = `${fichaId}-${sectionTitle.replace(/[\s&]+/g, '-')}`;
+                    exercisesContainer.id = sectionId;
+                    
+                    if (Array.isArray(sections[sectionTitle])) {
+                        sections[sectionTitle].forEach(ex => {
+                            exercisesContainer.innerHTML += createExerciseCard(ex.name, ex.details, ex.video);
+                        });
+                    }
+                    
+                    sectionEl.appendChild(exercisesContainer);
+                    sectionEl.innerHTML += `<div class="mt-4"><button onclick="addExercise('${sectionId}')" class="bg-gray-500 text-white py-1 px-3 rounded-md hover:bg-gray-600 transition-colors text-sm">+ Adicionar Exercício</button></div>`;
+                    fichaContainer.appendChild(sectionEl);
+                }
+            }
+        }
+        
+        function createExerciseCard(name, details, video) {
+            const safeName = name.replace(/"/g, "&quot;");
+            const safeDetails = details.replace(/"/g, "&quot;");
+            const safeVideo = video.replace(/"/g, "&quot;");
+
+            return `
+                <div class="exercise-card">
+                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
+                    <div class="flex-1">
+                        <h3 class="font-semibold text-gray-900" contenteditable="true">${safeName}</h3>
+                        <p class="text-sm text-gray-500" contenteditable="true">${safeDetails}</p>
+                        <input type="text" class="w-full text-xs text-blue-500 mt-1 border rounded px-1" value="${safeVideo}" placeholder="Link do vídeo">
+                    </div>
+                    <button onclick="this.parentElement.remove()" class="delete-btn" title="Excluir exercício">&times;</button>
+                </div>
+            `;
+        }
+        
+        window.addExercise = function(containerId) {
+            const container = document.getElementById(containerId);
+            const cardHTML = createExerciseCard('Novo Exercício', 'Séries e Reps', '');
+            container.insertAdjacentHTML('beforeend', cardHTML);
+        }
+
+        window.saveAllWorkouts = async function() {
+            if (!userId) {
+                alert("Usuário não autenticado. Tente recarregar a página.");
+                return;
+            }
+            const workoutData = {};
+            ['fichaA', 'fichaB', 'fichaC'].forEach(fichaId => {
+                workoutData[fichaId] = {};
+                const fichaContainer = document.getElementById(fichaId);
+                const sections = fichaContainer.querySelectorAll('.section-title');
+                
+                sections.forEach(titleEl => {
+                    const title = titleEl.textContent;
+                    workoutData[fichaId][title] = [];
+                    const exerciseCards = titleEl.nextElementSibling.querySelectorAll('.exercise-card');
+                    exerciseCards.forEach(card => {
+                        const name = card.querySelector('h3').textContent;
+                        const details = card.querySelector('p').textContent;
+                        const video = card.querySelector('input').value;
+                        workoutData[fichaId][title].push({ name, details, video });
+                    });
+                });
+            });
+            
+            try {
+                const docRef = doc(db, `artifacts/${appId}/users/${userId}/workout`, 'data');
+                await setDoc(docRef, { plan: workoutData });
+
+                const toast = document.getElementById('toast');
+                toast.classList.remove('opacity-0', 'translate-y-2');
+                setTimeout(() => {
+                    toast.classList.add('opacity-0', 'translate-y-2');
+                }, 3000);
+            } catch (e) {
+                console.error("Erro ao salvar o treino: ", e);
+                alert("Falha ao salvar. Verifique o console para mais detalhes.");
+            }
+        }
+        
+        function showErrorNotification(title, message) {
+            const errorContainer = document.getElementById('error-notification');
+            const errorMessageEl = document.getElementById('error-message');
+            errorMessageEl.innerHTML = `<p>${title}</p><p class="text-xs mt-2">${message}</p>`;
+            errorContainer.classList.remove('hidden');
+        }
+
+        window.hideErrorNotification = function() {
+             document.getElementById('error-notification').classList.add('hidden');
+        }
+
+        window.showTab = function(tabId) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
             document.getElementById('btn-' + tabId).classList.add('active');
         }
         
-        document.addEventListener('DOMContentLoaded', () => {
-            showTab('fichaA');
-        });
-
         const modal = document.getElementById('videoModal');
         const iframe = document.getElementById('videoFrame');
 
         function getEmbedUrl(url) {
+            if (!url) return '';
             let videoId;
-            if (url.includes('youtube.com/shorts/')) {
-                videoId = url.split('/shorts/')[1].split('?')[0];
-            } else if (url.includes('youtu.be/')) {
-                videoId = url.split('youtu.be/')[1].split('?')[0];
-            } else {
-                const urlParams = new URLSearchParams(new URL(url).search);
-                videoId = urlParams.get('v');
+            try {
+                 if (url.includes('youtube.com/shorts/')) {
+                    videoId = url.split('/shorts/')[1].split('?')[0];
+                } else if (url.includes('youtu.be/')) {
+                    videoId = url.split('youtu.be/')[1].split('?')[0];
+                } else {
+                    const urlParams = new URLSearchParams(new URL(url).search);
+                    videoId = urlParams.get('v');
+                }
+            } catch (error) {
+                console.error("URL do vídeo inválida:", url);
+                return '';
             }
             return videoId ? `https://www.youtube.com/embed/${videoId}?autoplay=1` : '';
         }
 
-        function openModal(videoUrl) {
+        window.openModal = function(videoUrl) {
             const embedUrl = getEmbedUrl(videoUrl);
             if (embedUrl) {
                 iframe.src = embedUrl;
@@ -323,10 +355,10 @@
             }
         }
 
-        function closeModal() {
+        window.closeModal = function() {
             modal.classList.add('hidden');
             modal.classList.remove('flex');
-            iframe.src = ''; // Stop the video
+            iframe.src = '';
         }
         
         window.addEventListener('keydown', (e) => {
@@ -334,7 +366,7 @@
                 closeModal();
             }
         });
-    </script>
 
+    </script>
 </body>
 </html>
