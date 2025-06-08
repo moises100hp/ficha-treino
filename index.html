@@ -3,75 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ficha de Treino Editável - Moisés (Mês 06)</title>
+    <title>Ficha de Treino Editável</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        .tab-button-group {
-            display: flex;
-            align-items: center;
-            background-color: white;
-            border-radius: 0.5rem;
-            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-        }
-        .tab-button {
-            border-radius: 0;
-            box-shadow: none;
-        }
-        .tab-button.active {
-            background-color: #1d4ed8;
-            color: white;
-        }
-        .tab-button:first-child {
-             border-top-left-radius: 0.5rem;
-             border-bottom-left-radius: 0.5rem;
-        }
-        .tab-content {
-            display: none;
-        }
-        .tab-content.active {
-            display: block;
-        }
-        .exercise-card {
-            background-color: white;
-            padding: 1rem;
-            border-radius: 0.75rem;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-            border: 1px solid #e5e7eb;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            position: relative;
-        }
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid #d1d5db;
-            margin-bottom: 1rem;
-        }
-        .section-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: #111827;
-            padding-bottom: 0.5rem;
-             flex-grow: 1;
-        }
-        .delete-btn {
-            position: absolute;
-            top: 0.5rem;
-            right: 0.5rem;
-            cursor: pointer;
-            color: #ef4444;
-            display: none;
-        }
-        .exercise-card:hover .delete-btn {
-            display: block;
-        }
-    </style>
+       <link rel="stylesheet" href="style.css">
 </head>
 <body class="bg-gray-100 text-gray-800">
 
@@ -81,8 +16,20 @@
             <p class="text-lg text-gray-600 mt-1">Moisés - Mês 06</p>
         </header>
         
+         <!-- Auth Container -->
+        <div id="auth-container" class="text-center mb-8">
+            <div id="user-info" class="hidden items-center justify-center space-x-4">
+                <p id="user-name" class="text-gray-700 font-medium"></p>
+                <button id="logout-button" class="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition-colors">Sair</button>
+            </div>
+            <button id="login-button" class="bg-white text-gray-700 py-2 px-6 rounded-lg font-semibold hover:bg-gray-50 transition-colors shadow-lg border flex items-center justify-center mx-auto">
+                <svg class="w-6 h-6 mr-3" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8c-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4C12.955 4 4 12.955 4 24s8.955 20 20 20s20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"></path><path fill="#FF3D00" d="M6.306 14.691c-1.229 2.525-1.927 5.382-1.927 8.5C4.379 33.424 8.717 38 14.004 38c2.903 0 5.613-1.031 7.766-2.768L14.65 28.115C11.599 28.536 8.522 26.386 8.522 23.01c0-1.423.559-2.735 1.476-3.729l-3.692-3.59z"></path><path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.91 11.91 0 0 1 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z"></path><path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303c-0.792 2.237-2.231 4.166-4.087 5.574l6.19 5.238C39.991 35.636 44 29.598 44 24c0-1.341-0.138-2.65-.389-3.917z"></path></svg>
+                Login com Google
+            </button>
+        </div>
+
         <!-- App Container -->
-        <div id="app-container">
+        <div id="app-container" class="hidden">
             <div id="tabs-container" class="flex justify-center flex-wrap items-center gap-4 mb-8">
                  <!-- Tab buttons will be rendered here by JS -->
             </div>
@@ -96,7 +43,7 @@
     <!-- Video Modal -->
     <div id="videoModal" class="fixed inset-0 bg-black bg-opacity-75 hidden justify-center items-center z-50 p-4 transition-opacity duration-300" onclick="closeModal('videoModal')">
         <div class="bg-black p-1 sm:p-2 rounded-lg shadow-xl w-full max-w-3xl relative" onclick="event.stopPropagation()">
-            <button onclick="closeModal('videoModal')" class="absolute -top-2 -right-2 sm:top-0 sm:-right-8 text-white text-4xl font-bold">&times;</button>
+            <button onclick="closeModal('videoModal')" class="absolute -top-2 -right-2 sm:top-0 sm:-right-8 text-white text-4xl font-bold">×</button>
             <div class="aspect-video">
                 <iframe id="videoFrame" class="w-full h-full rounded-md" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             </div>
@@ -128,256 +75,9 @@
         </div>
     </div>
 
-    <script>
-        let currentWorkoutData = {};
-
-        const defaultWorkout = {
-            "Ficha A": {"Peito": [{ name: "Supino reto com halter", details: '3x12 (empurra normal e desce segurando 4s)', video: 'https://youtube.com/shorts/5IoHFiaAHb8' }]},
-            "Ficha B": {"Costas": [{ name: "Remada baixa pegada neutra", details: '3x12', video: 'https://youtube.com/shorts/4jPBu3JxIJA' }]},
-            "Ficha C": {"Braços": [{ name: "Rosca direta no cross over", details: '4x12 (empurra normal e desce segurando 4s)', video: 'https://youtube.com/shorts/e6yZ8_iv4GI' }]}
-        };
-        
-        const tabsContainer = document.getElementById('tabs-container');
-        const mainContentContainer = document.getElementById('main-content-container');
-        const exerciseModal = document.getElementById('exerciseModal');
-
-        function initializeApp() {
-            currentWorkoutData = JSON.parse(localStorage.getItem('workoutPlan')) || defaultWorkout;
-            renderUI();
-        }
-
-        function saveToLocalStorage() {
-            localStorage.setItem('workoutPlan', JSON.stringify(currentWorkoutData));
-        }
-        
-        function renderUI() {
-            tabsContainer.innerHTML = '';
-            mainContentContainer.innerHTML = '';
-
-            Object.keys(currentWorkoutData).forEach(fichaId => {
-                const tabGroup = document.createElement('div');
-                tabGroup.className = "tab-button-group";
-
-                const tabButton = document.createElement('button');
-                tabButton.className = "tab-button flex-1 sm:flex-none text-center py-2 px-4 font-semibold transition-all duration-300";
-                tabButton.textContent = fichaId;
-                tabButton.id = `btn-${fichaId}`;
-                tabButton.onclick = () => showTab(fichaId);
-                
-                const deleteFichaBtn = document.createElement('button');
-                deleteFichaBtn.className = "text-red-400 hover:text-red-600 font-bold px-2";
-                deleteFichaBtn.innerHTML = '&times;';
-                deleteFichaBtn.title = `Remover ${fichaId}`;
-                deleteFichaBtn.onclick = () => deleteFicha(fichaId);
-
-                tabGroup.appendChild(tabButton);
-                tabGroup.appendChild(deleteFichaBtn);
-                tabsContainer.appendChild(tabGroup);
-
-                const contentDiv = document.createElement('div');
-                contentDiv.id = fichaId;
-                contentDiv.className = "tab-content";
-                mainContentContainer.appendChild(contentDiv);
-                
-                renderFichaContent(fichaId);
-            });
-            
-            const addFichaButton = document.createElement('button');
-            addFichaButton.className = "bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors";
-            addFichaButton.textContent = "+ Adicionar Ficha";
-            addFichaButton.onclick = addFicha;
-            tabsContainer.appendChild(addFichaButton);
-
-
-            const firstFicha = Object.keys(currentWorkoutData)[0];
-            if (firstFicha) {
-                showTab(firstFicha);
-            }
-        }
-
-        function renderFichaContent(fichaId) {
-            const fichaContainer = document.getElementById(fichaId);
-            fichaContainer.innerHTML = '';
-            const sections = currentWorkoutData[fichaId];
-
-            for(const sectionTitle in sections) {
-                const sectionEl = document.createElement('div');
-                sectionEl.innerHTML = `
-                    <div class="section-header">
-                        <h2 class="section-title">${sectionTitle}</h2>
-                        <button onclick="deleteSection('${fichaId}', '${sectionTitle}')" class="text-red-500 hover:text-red-700 font-bold p-2 text-xl" title="Remover Seção">&times;</button>
-                    </div>
-                `;
-                const exercisesContainer = document.createElement('div');
-                exercisesContainer.className = 'space-y-4';
-                
-                const sectionId = `${fichaId}-${sectionTitle.replace(/[\s&]+/g, '-')}`;
-                exercisesContainer.id = sectionId;
-                
-                if (Array.isArray(sections[sectionTitle])) {
-                    sections[sectionTitle].forEach((ex, index) => {
-                        exercisesContainer.innerHTML += createExerciseCard(fichaId, sectionTitle, index, ex.name, ex.details, ex.video);
-                    });
-                }
-                
-                sectionEl.appendChild(exercisesContainer);
-                sectionEl.innerHTML += `<div class="mt-4"><button onclick="openExerciseModal('${fichaId}', '${sectionTitle}')" class="bg-gray-500 text-white py-1 px-3 rounded-md hover:bg-gray-600 transition-colors text-sm">+ Adicionar Exercício</button></div>`;
-                fichaContainer.appendChild(sectionEl);
-            }
-            
-            const addSectionButton = document.createElement('button');
-            addSectionButton.className = "mt-6 bg-indigo-500 text-white py-2 px-4 rounded-md hover:bg-indigo-600 transition-colors";
-            addSectionButton.textContent = "+ Adicionar Seção";
-            addSectionButton.onclick = () => addSection(fichaId);
-            fichaContainer.appendChild(addSectionButton);
-        }
-
-        function addFicha() {
-            const fichaName = prompt("Digite o nome da nova ficha (ex: Ficha D):");
-            if (fichaName && !currentWorkoutData[fichaName]) {
-                currentWorkoutData[fichaName] = {};
-                renderUI();
-                showTab(fichaName);
-                saveToLocalStorage();
-            } else if (currentWorkoutData[fichaName]) {
-                alert("Já existe uma ficha com este nome.");
-            }
-        }
-
-        window.deleteFicha = function(fichaId) {
-             if (confirm(`Tem certeza que deseja remover a ficha "${fichaId}"? Esta ação não pode ser desfeita.`)) {
-                delete currentWorkoutData[fichaId];
-                renderUI();
-                saveToLocalStorage();
-            }
-        }
-
-        function addSection(fichaId) {
-            const sectionName = prompt("Digite o nome da nova seção (ex: Bíceps):");
-            if (sectionName && !currentWorkoutData[fichaId][sectionName]) {
-                currentWorkoutData[fichaId][sectionName] = [];
-                renderFichaContent(fichaId);
-                 saveToLocalStorage();
-            } else if (currentWorkoutData[fichaId][sectionName]) {
-                alert("Já existe uma seção com este nome nesta ficha.");
-            }
-        }
-
-        window.deleteSection = function(fichaId, sectionTitle) {
-            if (confirm(`Tem certeza que deseja remover a seção "${sectionTitle}"?`)) {
-                delete currentWorkoutData[fichaId][sectionTitle];
-                renderFichaContent(fichaId);
-                saveToLocalStorage();
-            }
-        }
-
-        function createExerciseCard(fichaId, sectionTitle, index, name, details, video) {
-            return `
-                <div class="exercise-card">
-                    <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
-                    <div class="flex-1">
-                        <h3 class="font-semibold text-gray-900">${name}</h3>
-                        <p class="text-sm text-gray-500">${details}</p>
-                    </div>
-                    <button onclick="openModal('${video}')" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors mr-6">Ver Vídeo</button>
-                    <button onclick="deleteExercise('${fichaId}', '${sectionTitle}', ${index})" class="delete-btn" title="Excluir exercício">&times;</button>
-                </div>
-            `;
-        }
-
-        window.deleteExercise = function(fichaId, sectionTitle, index) {
-            currentWorkoutData[fichaId][sectionTitle].splice(index, 1);
-            renderFichaContent(fichaId);
-            saveToLocalStorage();
-        }
-
-        window.openExerciseModal = function(fichaId, sectionTitle) {
-            exerciseModal.dataset.fichaId = fichaId;
-            exerciseModal.dataset.sectionTitle = sectionTitle;
-            document.getElementById('new-exercise-name').value = '';
-            document.getElementById('new-exercise-details').value = '';
-            document.getElementById('new-exercise-video').value = '';
-            exerciseModal.classList.remove('hidden');
-            exerciseModal.classList.add('flex');
-        }
-
-        window.saveNewExercise = function() {
-            const { fichaId, sectionTitle } = exerciseModal.dataset;
-            const name = document.getElementById('new-exercise-name').value;
-            const details = document.getElementById('new-exercise-details').value;
-            const video = document.getElementById('new-exercise-video').value;
-
-            if (!name || !details) {
-                alert("Por favor, preencha o nome e a descrição do exercício.");
-                return;
-            }
-            
-            if (!currentWorkoutData[fichaId][sectionTitle]) {
-                 currentWorkoutData[fichaId][sectionTitle] = [];
-            }
-            
-            currentWorkoutData[fichaId][sectionTitle].push({name, details, video});
-            
-            renderFichaContent(fichaId);
-            closeModal('exerciseModal');
-            saveToLocalStorage();
-        }
-
-        window.showTab = function(tabId) {
-            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-            document.getElementById(tabId)?.classList.add('active');
-            document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
-            document.getElementById(`btn-${tabId}`)?.classList.add('active');
-        }
-        
-        function getEmbedUrl(url) {
-            if (!url) return '';
-            let videoId;
-            try {
-                 if (url.includes('youtube.com/shorts/')) {
-                    videoId = url.split('/shorts/')[1].split('?')[0];
-                } else if (url.includes('youtu.be/')) {
-                    videoId = url.split('youtu.be/')[1].split('?')[0];
-                } else {
-                    const urlParams = new URLSearchParams(new URL(url).search);
-                    videoId = urlParams.get('v');
-                }
-            } catch (error) {
-                console.error("URL do vídeo inválida:", url);
-                return '';
-            }
-            return videoId ? `https://www.youtube.com/embed/${videoId}?autoplay=1` : '';
-        }
-
-        window.openModal = function(videoUrl) {
-            const embedUrl = getEmbedUrl(videoUrl);
-            const videoModal = document.getElementById('videoModal');
-            if (embedUrl) {
-                document.getElementById('videoFrame').src = embedUrl;
-                videoModal.classList.remove('hidden');
-                videoModal.classList.add('flex');
-            }
-        }
-
-        window.closeModal = function(modalId) {
-            const modal = document.getElementById(modalId);
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-            if (modalId === 'videoModal') {
-                document.getElementById('videoFrame').src = '';
-            }
-        }
-        
-        window.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                closeModal('videoModal');
-                closeModal('exerciseModal');
-            }
-        });
-
-        // Initialize the app on page load
-        initializeApp();
-
-    </script>
+    <script type="module" src="script.js"></script>
 </body>
 </html>
+
+
+<!--  <script type="module" src="script.js"></script> -->
