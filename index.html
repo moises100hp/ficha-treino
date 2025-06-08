@@ -77,7 +77,7 @@
                 <button id="logout-button" class="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition-colors">Sair</button>
             </div>
             <button id="login-button" class="bg-white text-gray-700 py-2 px-6 rounded-lg font-semibold hover:bg-gray-50 transition-colors shadow-lg border flex items-center justify-center mx-auto">
-                <svg class="w-6 h-6 mr-3" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8c-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4C12.955 4 4 12.955 4 24s8.955 20 20 20s20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"></path><path fill="#FF3D00" d="M6.306 14.691c-1.229 2.525-1.927 5.382-1.927 8.5C4.379 33.424 8.717 38 14.004 38c2.903 0 5.613-1.031 7.766-2.768L14.65 28.115C11.599 28.536 8.522 26.386 8.522 23.01c0-1.423.559-2.735 1.476-3.729l-3.692-3.59z"></path><path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.91 11.91 0 0 1 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z"></path><path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303c-0.792 2.237-2.231 4.166-4.087 5.574l6.19 5.238C39.991 35.636 44 29.598 44 24c0-1.341-0.138-2.65-0.389-3.917z"></path></svg>
+                <svg class="w-6 h-6 mr-3" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8c-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4C12.955 4 4 12.955 4 24s8.955 20 20 20s20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"></path><path fill="#FF3D00" d="M6.306 14.691c-1.229 2.525-1.927 5.382-1.927 8.5C4.379 33.424 8.717 38 14.004 38c2.903 0 5.613-1.031 7.766-2.768L14.65 28.115C11.599 28.536 8.522 26.386 8.522 23.01c0-1.423.559-2.735 1.476-3.729l-3.692-3.59z"></path><path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.91 11.91 0 0 1 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z"></path><path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303c-0.792 2.237-2.231 4.166-4.087 5.574l6.19 5.238C39.991 35.636 44 29.598 44 24c0-1.341-0.138-2.65-.389-3.917z"></path></svg>
                 Login com Google
             </button>
         </div>
@@ -131,25 +131,25 @@
         import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // ====================================================================================
-        // PASSO 2: COLE A CONFIGURAÇÃO DO SEU FIREBASE AQUI
+        // COLE A CONFIGURAÇÃO DO SEU FIREBASE AQUI
         // Substitua o objeto de exemplo abaixo pela configuração que você copiou do seu projeto.
         // ====================================================================================
-       // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyB_mbJkhn7JrOqaejB-44vEs3l_hFcPAA0",
-  authDomain: "fichatreino-b5313.firebaseapp.com",
-  projectId: "fichatreino-b5313",
-  storageBucket: "fichatreino-b5313.firebasestorage.app",
-  messagingSenderId: "68892866105",
-  appId: "1:68892866105:web:49b67db3e9c3ea6e08bfe8",
-  measurementId: "G-1QX9YDZ172"
-};
+        const firebaseConfig = {
+    apiKey: "AIzaSyB_mbJkhn7JrOqaejB-44vEs3l_hFcPAA0",
+    authDomain: "fichatreino-b5313.firebaseapp.com",
+    projectId: "fichatreino-b5313",
+    storageBucket: "fichatreino-b5313.firebasestorage.app",
+    messagingSenderId: "68892866105",
+    appId: "1:68892866105:web:49b67db3e9c3ea6e08bfe8",
+    measurementId: "G-1QX9YDZ172"
+  };
         // ====================================================================================
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
         
+        const appId = firebaseConfig.appId;
         let userId;
 
         const defaultWorkout = {
@@ -179,8 +179,13 @@ const firebaseConfig = {
                     );
                 } else if (error.code === 'auth/api-key-not-valid') {
                      showErrorNotification(
-                        `A chave de API do Firebase não é válida.`,
-                        `Verifique se você copiou e colou corretamente o objeto <strong>firebaseConfig</strong> no código.`
+                        `A chave de API do Firebase (apiKey) não é válida.`,
+                        `Verifique se você copiou e colou corretamente o objeto <strong>firebaseConfig</strong> do seu projeto.`
+                    );
+                } else {
+                     showErrorNotification(
+                        `Ocorreu um erro inesperado durante o login.`,
+                        `Verifique o console para mais detalhes (código: ${error.code})`
                     );
                 }
             }
@@ -217,7 +222,7 @@ const firebaseConfig = {
         });
 
         function loadWorkout(uid) {
-            const docRef = doc(db, "users", uid, "workout", "data");
+            const docRef = doc(db, `artifacts/${appId}/users/${uid}/workout`, 'data');
             onSnapshot(docRef, (docSnap) => {
                 const workoutData = docSnap.exists() ? docSnap.data().plan : defaultWorkout;
                 renderWorkout(workoutData);
@@ -307,7 +312,7 @@ const firebaseConfig = {
             });
             
             try {
-                const docRef = doc(db, "users", userId, "workout", "data");
+                const docRef = doc(db, `artifacts/${appId}/users/${userId}/workout`, 'data');
                 await setDoc(docRef, { plan: workoutData });
 
                 const toast = document.getElementById('toast');
