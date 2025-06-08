@@ -3,16 +3,6 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebas
 import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 import { getFirestore, doc, getDoc, setDoc, onSnapshot, collection, query, where, getDocs, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-// COLE A CONFIGURAÇÃO DO SEU FIREBASE AQUI
-const firebaseConfig = {
-    apiKey: "AIzaSy...SUA_CHAVE_AQUI",
-    authDomain: "seu-projeto-id.firebaseapp.com",
-    projectId: "seu-projeto-id",
-    storageBucket: "seu-projeto-id.appspot.com",
-    messagingSenderId: "SEU_MESSAGING_ID",
-    appId: "SEU_APP_ID"
-};
-
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
