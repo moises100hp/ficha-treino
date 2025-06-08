@@ -10,6 +10,8 @@ const db = getFirestore(app);
 let userId;
 let currentWorkoutData = {};
 
+const defaultWorkout = {}; // Inicia vazio por padrão
+
 const loginButton = document.getElementById('login-button');
 const logoutButton = document.getElementById('logout-button');
 const userInfo = document.getElementById('user-info');
@@ -18,6 +20,7 @@ const appContainer = document.getElementById('app-container');
 const tabsContainer = document.getElementById('tabs-container');
 const mainContentContainer = document.getElementById('main-content-container');
 const exerciseModal = document.getElementById('exerciseModal');
+const planSubtitle = document.getElementById('plan-subtitle');
 
 const provider = new GoogleAuthProvider();
 
@@ -44,6 +47,11 @@ onAuthStateChanged(auth, user => {
     if (user) {
         userId = user.uid;
         userNameEl.textContent = `Logado como: ${user.displayName || user.email}`;
+        
+        const date = new Date();
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        planSubtitle.textContent = `Mês ${month}`;
+        
         userInfo.classList.remove('hidden');
         userInfo.classList.add('flex');
         loginButton.classList.add('hidden');
@@ -51,6 +59,7 @@ onAuthStateChanged(auth, user => {
         loadWorkout(userId);
     } else {
         userId = null;
+        planSubtitle.textContent = 'Faça login para começar';
         userInfo.classList.add('hidden');
         userInfo.classList.remove('flex');
         loginButton.classList.remove('hidden');
@@ -63,11 +72,11 @@ onAuthStateChanged(auth, user => {
 function loadWorkout(uid) {
     const docRef = doc(db, "users", uid);
     onSnapshot(docRef, (docSnap) => {
-        currentWorkoutData = docSnap.exists() ? docSnap.data().plan : {}; // Começa com objeto vazio
+        currentWorkoutData = docSnap.exists() ? docSnap.data().plan : defaultWorkout;
         renderUI();
     }, (error) => {
          console.error("Erro ao carregar dados do Firestore:", error);
-         currentWorkoutData = {}; // Em caso de erro, começa com objeto vazio
+         currentWorkoutData = defaultWorkout;
          renderUI();
     });
 }
