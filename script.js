@@ -3,9 +3,16 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebas
 import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 import { getFirestore, doc, getDoc, setDoc, onSnapshot, collection, query, where, getDocs, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+let app, auth, db;
+try {
+    app = initializeApp(firebaseConfig);
+    auth = getAuth(app);
+    db = getFirestore(app);
+} catch (e) {
+    console.error("Erro ao inicializar o Firebase. Verifique suas credenciais no firebaseConfig.", e);
+    alert("Erro de configuração do Firebase. Verifique o console.");
+}
+
 
 let currentUser = { uid: null, role: null, personalId: null, selectedStudentId: null };
 let currentWorkoutData = {};
@@ -115,6 +122,7 @@ function loadStudentsForPersonal(personalId) {
     onSnapshot(personalDocRef, (docSnap) => {
         if (docSnap.exists()) {
             const students = docSnap.data().students || [];
+            const selector = document.getElementById('student-selector');
             selector.innerHTML = '<option value="">Selecione um aluno</option>';
             students.forEach(student => {
                 selector.innerHTML += `<option value="${student.id}">${student.name}</option>`;
