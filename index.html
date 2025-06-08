@@ -10,10 +10,24 @@
         body {
             font-family: 'Inter', sans-serif;
         }
+        .tab-button-group {
+            display: flex;
+            align-items: center;
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+        }
+        .tab-button {
+            border-radius: 0;
+            box-shadow: none;
+        }
         .tab-button.active {
             background-color: #1d4ed8;
             color: white;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        .tab-button:first-child {
+             border-top-left-radius: 0.5rem;
+             border-bottom-left-radius: 0.5rem;
         }
         .tab-content {
             display: none;
@@ -32,19 +46,19 @@
             gap: 1rem;
             position: relative;
         }
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #d1d5db;
+            margin-bottom: 1rem;
+        }
         .section-title {
             font-size: 1.25rem;
             font-weight: 600;
             color: #111827;
-            margin-top: 2rem;
-            margin-bottom: 1rem;
             padding-bottom: 0.5rem;
-            border-bottom: 2px solid #d1d5db;
-        }
-        [contenteditable]:focus {
-            outline: 2px solid #3b82f6;
-            background-color: #eff6ff;
-            border-radius: 4px;
+             flex-grow: 1;
         }
         .delete-btn {
             position: absolute;
@@ -57,296 +71,265 @@
         .exercise-card:hover .delete-btn {
             display: block;
         }
-        .notification {
-            transition: opacity 0.5s, transform 0.5s;
-        }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800">
 
     <div class="container mx-auto p-4 sm:p-6 lg:p-8 max-w-4xl">
         <header class="text-center mb-8">
-            <h1 class="text-3xl sm:text-4xl font-bold text-gray-900">Plano de Treino Editável</h1>
+            <h1 class="text-3xl sm:text-4xl font-bold text-gray-900">Plano de Treino</h1>
             <p class="text-lg text-gray-600 mt-1">Moisés - Mês 06</p>
         </header>
         
-        <!-- Auth Container -->
-        <div id="auth-container" class="text-center mb-8">
-            <div id="user-info" class="hidden items-center justify-center space-x-4">
-                <p id="user-name" class="text-gray-700 font-medium"></p>
-                <button id="logout-button" class="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition-colors">Sair</button>
-            </div>
-            <button id="login-button" class="bg-white text-gray-700 py-2 px-6 rounded-lg font-semibold hover:bg-gray-50 transition-colors shadow-lg border flex items-center justify-center mx-auto">
-                <svg class="w-6 h-6 mr-3" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8c-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4C12.955 4 4 12.955 4 24s8.955 20 20 20s20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"></path><path fill="#FF3D00" d="M6.306 14.691c-1.229 2.525-1.927 5.382-1.927 8.5C4.379 33.424 8.717 38 14.004 38c2.903 0 5.613-1.031 7.766-2.768L14.65 28.115C11.599 28.536 8.522 26.386 8.522 23.01c0-1.423.559-2.735 1.476-3.729l-3.692-3.59z"></path><path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.91 11.91 0 0 1 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z"></path><path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303c-0.792 2.237-2.231 4.166-4.087 5.574l6.19 5.238C39.991 35.636 44 29.598 44 24c0-1.341-0.138-2.65-.389-3.917z"></path></svg>
-                Login com Google
-            </button>
-        </div>
-        
         <!-- App Container -->
-        <div id="app-container" class="hidden">
-            <div class="text-center mb-6">
-                <button onclick="saveAllWorkouts()" class="bg-green-600 text-white py-2 px-6 rounded-lg font-semibold hover:bg-green-700 transition-colors shadow-lg">
-                    Salvar Alterações
-                </button>
+        <div id="app-container">
+            <div id="tabs-container" class="flex justify-center flex-wrap items-center gap-4 mb-8">
+                 <!-- Tab buttons will be rendered here by JS -->
             </div>
 
-            <div class="flex justify-center space-x-2 sm:space-x-4 mb-8">
-                <button onclick="showTab('fichaA')" id="btn-fichaA" class="tab-button active flex-1 sm:flex-none text-center py-2 px-4 font-semibold rounded-lg shadow-md transition-all duration-300 bg-white text-gray-700 hover:bg-gray-200">Ficha A</button>
-                <button onclick="showTab('fichaB')" id="btn-fichaB" class="tab-button flex-1 sm:flex-none text-center py-2 px-4 font-semibold rounded-lg shadow-md transition-all duration-300 bg-white text-gray-700 hover:bg-gray-200">Ficha B</button>
-                <button onclick="showTab('fichaC')" id="btn-fichaC" class="tab-button flex-1 sm:flex-none text-center py-2 px-4 font-semibold rounded-lg shadow-md transition-all duration-300 bg-white text-gray-700 hover:bg-gray-200">Ficha C</button>
+            <div id="main-content-container">
+                <!-- Tab content will be rendered here by JS -->
             </div>
-
-            <div id="fichaA" class="tab-content active"></div>
-            <div id="fichaB" class="tab-content"></div>
-            <div id="fichaC" class="tab-content"></div>
         </div>
     </div>
     
-    <!-- Notifications -->
-    <div id="toast" class="notification fixed bottom-5 right-5 bg-green-500 text-white py-2 px-4 rounded-lg shadow-xl opacity-0 transform translate-y-2">
-        Salvo com sucesso!
-    </div>
-    <div id="error-notification" class="notification hidden fixed top-5 right-5 bg-red-500 text-white p-4 rounded-lg shadow-xl max-w-sm z-50">
-        <div class="flex justify-between items-start">
-            <div>
-                <h4 class="font-bold">Erro de Configuração</h4>
-                <p id="error-message" class="mt-2 text-sm"></p>
-            </div>
-            <button onclick="hideErrorNotification()" class="ml-4 text-white text-2xl font-bold leading-none">&times;</button>
-        </div>
-    </div>
-
-    <div id="videoModal" class="fixed inset-0 bg-black bg-opacity-75 hidden justify-center items-center z-50 p-4 transition-opacity duration-300" onclick="closeModal()">
+    <!-- Video Modal -->
+    <div id="videoModal" class="fixed inset-0 bg-black bg-opacity-75 hidden justify-center items-center z-50 p-4 transition-opacity duration-300" onclick="closeModal('videoModal')">
         <div class="bg-black p-1 sm:p-2 rounded-lg shadow-xl w-full max-w-3xl relative" onclick="event.stopPropagation()">
-            <button onclick="closeModal()" class="absolute -top-2 -right-2 sm:top-0 sm:-right-8 text-white text-4xl font-bold">&times;</button>
+            <button onclick="closeModal('videoModal')" class="absolute -top-2 -right-2 sm:top-0 sm:-right-8 text-white text-4xl font-bold">&times;</button>
             <div class="aspect-video">
                 <iframe id="videoFrame" class="w-full h-full rounded-md" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             </div>
         </div>
     </div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    <!-- Add Exercise Modal -->
+    <div id="exerciseModal" class="fixed inset-0 bg-black bg-opacity-75 hidden justify-center items-center z-50 p-4" onclick="closeModal('exerciseModal')">
+        <div class="bg-white p-6 rounded-lg shadow-xl w-full max-w-md relative" onclick="event.stopPropagation()">
+            <h3 class="text-lg font-bold mb-4">Adicionar Novo Exercício</h3>
+            <div class="space-y-4">
+                <div>
+                    <label for="new-exercise-name" class="block text-sm font-medium text-gray-700">Exercício</label>
+                    <input type="text" id="new-exercise-name" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Ex: Supino Reto">
+                </div>
+                <div>
+                    <label for="new-exercise-details" class="block text-sm font-medium text-gray-700">Descrição (Séries/Reps)</label>
+                    <input type="text" id="new-exercise-details" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Ex: 3x12">
+                </div>
+                 <div>
+                    <label for="new-exercise-video" class="block text-sm font-medium text-gray-700">Link do Vídeo</label>
+                    <input type="text" id="new-exercise-video" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="https://youtube.com/...">
+                </div>
+            </div>
+            <div class="mt-6 flex justify-end space-x-3">
+                <button type="button" onclick="closeModal('exerciseModal')" class="bg-gray-200 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-300">Cancelar</button>
+                <button type="button" onclick="saveNewExercise()" class="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700">Salvar Exercício</button>
+            </div>
+        </div>
+    </div>
 
-        // ====================================================================================
-        // COLE A CONFIGURAÇÃO DO SEU FIREBASE AQUI
-        // Substitua o objeto de exemplo abaixo pela configuração que você copiou do seu projeto.
-        // ====================================================================================
-        const firebaseConfig = {
-    apiKey: "AIzaSyB_mbJkhn7JrOqaejB-44vEs3l_hFcPAA0",
-    authDomain: "fichatreino-b5313.firebaseapp.com",
-    projectId: "fichatreino-b5313",
-    storageBucket: "fichatreino-b5313.firebasestorage.app",
-    messagingSenderId: "68892866105",
-    appId: "1:68892866105:web:49b67db3e9c3ea6e08bfe8",
-    measurementId: "G-1QX9YDZ172"
-  };
-        // ====================================================================================
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-        
-        const appId = firebaseConfig.appId;
-        let userId;
+    <script>
+        let currentWorkoutData = {};
 
         const defaultWorkout = {
-            fichaA: {"Peito": [{ name: "Supino reto com halter", details: '3x12 (empurra normal e desce segurando 4s)', video: 'https://youtube.com/shorts/5IoHFiaAHb8' },{ name: "Supino 45 no guiado", details: '3x12', video: 'https://youtube.com/shorts/EzEv5hcFixE' }],"Costas & Ombros": [{ name: "Remada alta no guiado", details: '3x12 (empurra normal e desce segurando 4s)', video: 'https://youtube.com/shorts/LXa0IvLV_gg' }], "Tríceps": [{ name: "Tríceps Francês com Halter", details: '3x12', video: 'https://youtube.com/shorts/Az2p67i6rAc' }], "Abdômen & Lombar": [{ name: "Abdominal canivete", details: '3x20', video: 'https://youtube.com/shorts/XmZBaw8usgo' }]},
-            fichaB: {"Costas": [{ name: "Remada baixa pegada neutra", details: '3x12', video: 'https://youtube.com/shorts/4jPBu3JxIJA' }], "Pernas & Glúteos": [{ name: "Leg 45", details: '3x12 (empurra normal e desce segurando 4s)', video: 'https://youtube.com/shorts/5Pm33Q5w4MM' }]},
-            fichaC: {"Pernas (Posterior & Adutores)": [{ name: "Banco flexor + Stiff", details: '4x12 (alternar)', video: 'https://youtube.com/shorts/gTQQ8etNnPA' }], "Panturrilhas": [{ name: "Panturrilha leg 45 + Jump", details: '3x15 + 40s (alternar)', video: 'https://youtube.com/shorts/erUNxqpFxkc' }], "Braços": [{ name: "Rosca direta no cross over", details: '4x12 (empurra normal e desce segurando 4s)', video: 'https://youtube.com/shorts/e6yZ8_iv4GI' }]}
+            "Ficha A": {"Peito": [{ name: "Supino reto com halter", details: '3x12 (empurra normal e desce segurando 4s)', video: 'https://youtube.com/shorts/5IoHFiaAHb8' }]},
+            "Ficha B": {"Costas": [{ name: "Remada baixa pegada neutra", details: '3x12', video: 'https://youtube.com/shorts/4jPBu3JxIJA' }]},
+            "Ficha C": {"Braços": [{ name: "Rosca direta no cross over", details: '4x12 (empurra normal e desce segurando 4s)', video: 'https://youtube.com/shorts/e6yZ8_iv4GI' }]}
         };
         
-        const loginButton = document.getElementById('login-button');
-        const logoutButton = document.getElementById('logout-button');
-        const userInfo = document.getElementById('user-info');
-        const userNameEl = document.getElementById('user-name');
-        const appContainer = document.getElementById('app-container');
+        const tabsContainer = document.getElementById('tabs-container');
+        const mainContentContainer = document.getElementById('main-content-container');
+        const exerciseModal = document.getElementById('exerciseModal');
 
-        const provider = new GoogleAuthProvider();
-
-        async function signInWithGoogle() {
-            try {
-                await signInWithPopup(auth, provider);
-                hideErrorNotification();
-            } catch (error) {
-                console.error("Erro ao fazer login com Google:", error);
-                if (error.code === 'auth/unauthorized-domain') {
-                    showErrorNotification(
-                        `O domínio <strong>${window.location.hostname}</strong> não está autorizado para login.`,
-                        `Vá para o seu console do Firebase -> Authentication -> Settings -> Authorized domains e adicione este domínio.`
-                    );
-                } else if (error.code === 'auth/api-key-not-valid') {
-                     showErrorNotification(
-                        `A chave de API do Firebase (apiKey) não é válida.`,
-                        `Verifique se você copiou e colou corretamente o objeto <strong>firebaseConfig</strong> do seu projeto.`
-                    );
-                } else {
-                     showErrorNotification(
-                        `Ocorreu um erro inesperado durante o login.`,
-                        `Verifique o console para mais detalhes (código: ${error.code})`
-                    );
-                }
-            }
+        function initializeApp() {
+            currentWorkoutData = JSON.parse(localStorage.getItem('workoutPlan')) || defaultWorkout;
+            renderUI();
         }
 
-        async function logOut() {
-            try {
-                await signOut(auth);
-            } catch (error) {
-                console.error("Erro ao fazer logout:", error);
-            }
+        function saveToLocalStorage() {
+            localStorage.setItem('workoutPlan', JSON.stringify(currentWorkoutData));
         }
         
-        loginButton.addEventListener('click', signInWithGoogle);
-        logoutButton.addEventListener('click', logOut);
+        function renderUI() {
+            tabsContainer.innerHTML = '';
+            mainContentContainer.innerHTML = '';
 
-        onAuthStateChanged(auth, user => {
-            if (user) {
-                userId = user.uid;
-                userNameEl.textContent = `Logado como: ${user.displayName || user.email}`;
-                userInfo.classList.remove('hidden');
-                userInfo.classList.add('flex');
-                loginButton.classList.add('hidden');
-                appContainer.classList.remove('hidden');
-                loadWorkout(userId);
-            } else {
-                userId = null;
-                userInfo.classList.add('hidden');
-                userInfo.classList.remove('flex');
-                loginButton.classList.remove('hidden');
-                appContainer.classList.add('hidden');
-                ['fichaA', 'fichaB', 'fichaC'].forEach(id => document.getElementById(id).innerHTML = '');
-            }
-        });
+            Object.keys(currentWorkoutData).forEach(fichaId => {
+                const tabGroup = document.createElement('div');
+                tabGroup.className = "tab-button-group";
 
-        function loadWorkout(uid) {
-            const docRef = doc(db, `artifacts/${appId}/users/${uid}/workout`, 'data');
-            onSnapshot(docRef, (docSnap) => {
-                const workoutData = docSnap.exists() ? docSnap.data().plan : defaultWorkout;
-                renderWorkout(workoutData);
-                showTab('fichaA');
+                const tabButton = document.createElement('button');
+                tabButton.className = "tab-button flex-1 sm:flex-none text-center py-2 px-4 font-semibold transition-all duration-300";
+                tabButton.textContent = fichaId;
+                tabButton.id = `btn-${fichaId}`;
+                tabButton.onclick = () => showTab(fichaId);
+                
+                const deleteFichaBtn = document.createElement('button');
+                deleteFichaBtn.className = "text-red-400 hover:text-red-600 font-bold px-2";
+                deleteFichaBtn.innerHTML = '&times;';
+                deleteFichaBtn.title = `Remover ${fichaId}`;
+                deleteFichaBtn.onclick = () => deleteFicha(fichaId);
+
+                tabGroup.appendChild(tabButton);
+                tabGroup.appendChild(deleteFichaBtn);
+                tabsContainer.appendChild(tabGroup);
+
+                const contentDiv = document.createElement('div');
+                contentDiv.id = fichaId;
+                contentDiv.className = "tab-content";
+                mainContentContainer.appendChild(contentDiv);
+                
+                renderFichaContent(fichaId);
             });
-        }
-        
-        function renderWorkout(workout) {
-            if (!workout) {
-                console.error("Dados de treino inválidos para renderizar.");
-                return;
-            }
-            for (const fichaId in workout) {
-                const fichaContainer = document.getElementById(fichaId);
-                if (!fichaContainer) continue;
-                fichaContainer.innerHTML = '';
-                const sections = workout[fichaId];
+            
+            const addFichaButton = document.createElement('button');
+            addFichaButton.className = "bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors";
+            addFichaButton.textContent = "+ Adicionar Ficha";
+            addFichaButton.onclick = addFicha;
+            tabsContainer.appendChild(addFichaButton);
 
-                for(const sectionTitle in sections) {
-                    const sectionEl = document.createElement('div');
-                    sectionEl.innerHTML = `<h2 class="section-title">${sectionTitle}</h2>`;
-                    const exercisesContainer = document.createElement('div');
-                    exercisesContainer.className = 'space-y-4';
-                    
-                    const sectionId = `${fichaId}-${sectionTitle.replace(/[\s&]+/g, '-')}`;
-                    exercisesContainer.id = sectionId;
-                    
-                    if (Array.isArray(sections[sectionTitle])) {
-                        sections[sectionTitle].forEach(ex => {
-                            exercisesContainer.innerHTML += createExerciseCard(ex.name, ex.details, ex.video);
-                        });
-                    }
-                    
-                    sectionEl.appendChild(exercisesContainer);
-                    sectionEl.innerHTML += `<div class="mt-4"><button onclick="addExercise('${sectionId}')" class="bg-gray-500 text-white py-1 px-3 rounded-md hover:bg-gray-600 transition-colors text-sm">+ Adicionar Exercício</button></div>`;
-                    fichaContainer.appendChild(sectionEl);
+
+            const firstFicha = Object.keys(currentWorkoutData)[0];
+            if (firstFicha) {
+                showTab(firstFicha);
+            }
+        }
+
+        function renderFichaContent(fichaId) {
+            const fichaContainer = document.getElementById(fichaId);
+            fichaContainer.innerHTML = '';
+            const sections = currentWorkoutData[fichaId];
+
+            for(const sectionTitle in sections) {
+                const sectionEl = document.createElement('div');
+                sectionEl.innerHTML = `
+                    <div class="section-header">
+                        <h2 class="section-title">${sectionTitle}</h2>
+                        <button onclick="deleteSection('${fichaId}', '${sectionTitle}')" class="text-red-500 hover:text-red-700 font-bold p-2 text-xl" title="Remover Seção">&times;</button>
+                    </div>
+                `;
+                const exercisesContainer = document.createElement('div');
+                exercisesContainer.className = 'space-y-4';
+                
+                const sectionId = `${fichaId}-${sectionTitle.replace(/[\s&]+/g, '-')}`;
+                exercisesContainer.id = sectionId;
+                
+                if (Array.isArray(sections[sectionTitle])) {
+                    sections[sectionTitle].forEach((ex, index) => {
+                        exercisesContainer.innerHTML += createExerciseCard(fichaId, sectionTitle, index, ex.name, ex.details, ex.video);
+                    });
                 }
+                
+                sectionEl.appendChild(exercisesContainer);
+                sectionEl.innerHTML += `<div class="mt-4"><button onclick="openExerciseModal('${fichaId}', '${sectionTitle}')" class="bg-gray-500 text-white py-1 px-3 rounded-md hover:bg-gray-600 transition-colors text-sm">+ Adicionar Exercício</button></div>`;
+                fichaContainer.appendChild(sectionEl);
+            }
+            
+            const addSectionButton = document.createElement('button');
+            addSectionButton.className = "mt-6 bg-indigo-500 text-white py-2 px-4 rounded-md hover:bg-indigo-600 transition-colors";
+            addSectionButton.textContent = "+ Adicionar Seção";
+            addSectionButton.onclick = () => addSection(fichaId);
+            fichaContainer.appendChild(addSectionButton);
+        }
+
+        function addFicha() {
+            const fichaName = prompt("Digite o nome da nova ficha (ex: Ficha D):");
+            if (fichaName && !currentWorkoutData[fichaName]) {
+                currentWorkoutData[fichaName] = {};
+                renderUI();
+                showTab(fichaName);
+                saveToLocalStorage();
+            } else if (currentWorkoutData[fichaName]) {
+                alert("Já existe uma ficha com este nome.");
             }
         }
-        
-        function createExerciseCard(name, details, video) {
-            const safeName = name.replace(/"/g, "&quot;");
-            const safeDetails = details.replace(/"/g, "&quot;");
-            const safeVideo = video ? video.replace(/"/g, "&quot;") : '';
 
+        window.deleteFicha = function(fichaId) {
+             if (confirm(`Tem certeza que deseja remover a ficha "${fichaId}"? Esta ação não pode ser desfeita.`)) {
+                delete currentWorkoutData[fichaId];
+                renderUI();
+                saveToLocalStorage();
+            }
+        }
+
+        function addSection(fichaId) {
+            const sectionName = prompt("Digite o nome da nova seção (ex: Bíceps):");
+            if (sectionName && !currentWorkoutData[fichaId][sectionName]) {
+                currentWorkoutData[fichaId][sectionName] = [];
+                renderFichaContent(fichaId);
+                 saveToLocalStorage();
+            } else if (currentWorkoutData[fichaId][sectionName]) {
+                alert("Já existe uma seção com este nome nesta ficha.");
+            }
+        }
+
+        window.deleteSection = function(fichaId, sectionTitle) {
+            if (confirm(`Tem certeza que deseja remover a seção "${sectionTitle}"?`)) {
+                delete currentWorkoutData[fichaId][sectionTitle];
+                renderFichaContent(fichaId);
+                saveToLocalStorage();
+            }
+        }
+
+        function createExerciseCard(fichaId, sectionTitle, index, name, details, video) {
             return `
                 <div class="exercise-card">
                     <div class="flex-shrink-0 bg-gray-200 p-3 rounded-full"><svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.25278C12 6.25278 10.7528 5 9.49998 5C7.49998 5 6.25278 6.25278 6.25278 7.50002C6.25278 8.74722 7.49998 10 9.49998 10C10.7528 10 12 8.74722 12 8.74722m1.5-4.74722C13.5 3.00556 14.7472 2 16.5 2c2 0 3.2472 1.25278 3.2472 2.50002C19.7472 6.24722 18.5 7.5 16.5 7.5c-1.2472 0-2.5-1.25278-2.5-2.24722zM12 17.7472c0 0-1.2472 1.2528-2.50002 1.2528C7.49998 19 6.25278 17.7472 6.25278 16.5c0-1.2472 1.2472-2.50002 2.2472-2.50002C9.2472 14 12 17.7472 12 17.7472zm1.5 4.7528c0 0 1.2472-1.2528 2.5-1.2528 2 0 3.2472 1.2528 3.2472 2.5 0 1.2472-1.2472 2.50002-2.2472 2.50002-1 0-2.5-1.2528-2.5-2.50002zM3 12h18"></path></svg></div>
                     <div class="flex-1">
-                        <h3 class="font-semibold text-gray-900" contenteditable="true">${safeName}</h3>
-                        <p class="text-sm text-gray-500" contenteditable="true">${safeDetails}</p>
-                        <input type="text" class="w-full text-xs text-blue-500 mt-1 border rounded px-1" value="${safeVideo}" placeholder="Link do vídeo">
+                        <h3 class="font-semibold text-gray-900">${name}</h3>
+                        <p class="text-sm text-gray-500">${details}</p>
                     </div>
-                    <button onclick="this.parentElement.remove()" class="delete-btn" title="Excluir exercício">&times;</button>
+                    <button onclick="openModal('${video}')" class="bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors mr-6">Ver Vídeo</button>
+                    <button onclick="deleteExercise('${fichaId}', '${sectionTitle}', ${index})" class="delete-btn" title="Excluir exercício">&times;</button>
                 </div>
             `;
         }
-        
-        window.addExercise = function(containerId) {
-            const container = document.getElementById(containerId);
-            const cardHTML = createExerciseCard('Novo Exercício', 'Séries e Reps', '');
-            container.insertAdjacentHTML('beforeend', cardHTML);
+
+        window.deleteExercise = function(fichaId, sectionTitle, index) {
+            currentWorkoutData[fichaId][sectionTitle].splice(index, 1);
+            renderFichaContent(fichaId);
+            saveToLocalStorage();
         }
 
-        window.saveAllWorkouts = async function() {
-            if (!userId) {
-                alert("Usuário não autenticado. Tente recarregar a página.");
+        window.openExerciseModal = function(fichaId, sectionTitle) {
+            exerciseModal.dataset.fichaId = fichaId;
+            exerciseModal.dataset.sectionTitle = sectionTitle;
+            document.getElementById('new-exercise-name').value = '';
+            document.getElementById('new-exercise-details').value = '';
+            document.getElementById('new-exercise-video').value = '';
+            exerciseModal.classList.remove('hidden');
+            exerciseModal.classList.add('flex');
+        }
+
+        window.saveNewExercise = function() {
+            const { fichaId, sectionTitle } = exerciseModal.dataset;
+            const name = document.getElementById('new-exercise-name').value;
+            const details = document.getElementById('new-exercise-details').value;
+            const video = document.getElementById('new-exercise-video').value;
+
+            if (!name || !details) {
+                alert("Por favor, preencha o nome e a descrição do exercício.");
                 return;
             }
-            const workoutData = {};
-            ['fichaA', 'fichaB', 'fichaC'].forEach(fichaId => {
-                workoutData[fichaId] = {};
-                const fichaContainer = document.getElementById(fichaId);
-                const sections = fichaContainer.querySelectorAll('.section-title');
-                
-                sections.forEach(titleEl => {
-                    const title = titleEl.textContent;
-                    workoutData[fichaId][title] = [];
-                    const exerciseCards = titleEl.nextElementSibling.querySelectorAll('.exercise-card');
-                    exerciseCards.forEach(card => {
-                        const name = card.querySelector('h3').textContent;
-                        const details = card.querySelector('p').textContent;
-                        const video = card.querySelector('input').value;
-                        workoutData[fichaId][title].push({ name, details, video });
-                    });
-                });
-            });
             
-            try {
-                const docRef = doc(db, `artifacts/${appId}/users/${userId}/workout`, 'data');
-                await setDoc(docRef, { plan: workoutData });
-
-                const toast = document.getElementById('toast');
-                toast.classList.remove('opacity-0', 'translate-y-2');
-                setTimeout(() => {
-                    toast.classList.add('opacity-0', 'translate-y-2');
-                }, 3000);
-            } catch (e) {
-                console.error("Erro ao salvar o treino: ", e);
-                alert("Falha ao salvar. Verifique o console para mais detalhes.");
+            if (!currentWorkoutData[fichaId][sectionTitle]) {
+                 currentWorkoutData[fichaId][sectionTitle] = [];
             }
-        }
-        
-        function showErrorNotification(title, message) {
-            const errorContainer = document.getElementById('error-notification');
-            const errorMessageEl = document.getElementById('error-message');
-            errorMessageEl.innerHTML = `<p>${title}</p><p class="text-xs mt-2">${message}</p>`;
-            errorContainer.classList.remove('hidden');
-        }
-
-        window.hideErrorNotification = function() {
-             document.getElementById('error-notification').classList.add('hidden');
+            
+            currentWorkoutData[fichaId][sectionTitle].push({name, details, video});
+            
+            renderFichaContent(fichaId);
+            closeModal('exerciseModal');
+            saveToLocalStorage();
         }
 
         window.showTab = function(tabId) {
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
+            document.getElementById(tabId)?.classList.add('active');
             document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
-            document.getElementById('btn-' + tabId).classList.add('active');
+            document.getElementById(`btn-${tabId}`)?.classList.add('active');
         }
         
-        const modal = document.getElementById('videoModal');
-        const iframe = document.getElementById('videoFrame');
-
         function getEmbedUrl(url) {
             if (!url) return '';
             let videoId;
@@ -368,24 +351,32 @@
 
         window.openModal = function(videoUrl) {
             const embedUrl = getEmbedUrl(videoUrl);
+            const videoModal = document.getElementById('videoModal');
             if (embedUrl) {
-                iframe.src = embedUrl;
-                modal.classList.remove('hidden');
-                modal.classList.add('flex');
+                document.getElementById('videoFrame').src = embedUrl;
+                videoModal.classList.remove('hidden');
+                videoModal.classList.add('flex');
             }
         }
 
-        window.closeModal = function() {
+        window.closeModal = function(modalId) {
+            const modal = document.getElementById(modalId);
             modal.classList.add('hidden');
             modal.classList.remove('flex');
-            iframe.src = '';
+            if (modalId === 'videoModal') {
+                document.getElementById('videoFrame').src = '';
+            }
         }
         
         window.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
-                closeModal();
+            if (e.key === 'Escape') {
+                closeModal('videoModal');
+                closeModal('exerciseModal');
             }
         });
+
+        // Initialize the app on page load
+        initializeApp();
 
     </script>
 </body>
