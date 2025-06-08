@@ -1,7 +1,17 @@
 import { firebaseConfig } from './firebase-config.js';
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
 import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-import { getFirestore, doc, getDoc, setDoc, onSnapshot, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+import { getFirestore, doc, getDoc, setDoc, onSnapshot, collection, query, where, getDocs, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+// COLE A CONFIGURAÇÃO DO SEU FIREBASE AQUI
+const firebaseConfig = {
+    apiKey: "AIzaSy...SUA_CHAVE_AQUI",
+    authDomain: "seu-projeto-id.firebaseapp.com",
+    projectId: "seu-projeto-id",
+    storageBucket: "seu-projeto-id.appspot.com",
+    messagingSenderId: "SEU_MESSAGING_ID",
+    appId: "SEU_APP_ID"
+};
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -9,6 +19,7 @@ const db = getFirestore(app);
 
 let currentUser = { uid: null, role: null, personalId: null, selectedStudentId: null };
 let currentWorkoutData = {};
+let unsubscribePlanListener;
 
 const loginButton = document.getElementById('login-button');
 const logoutButton = document.getElementById('logout-button');
@@ -20,6 +31,7 @@ const mainContentContainer = document.getElementById('main-content-container');
 const exerciseModal = document.getElementById('exerciseModal');
 const roleModal = document.getElementById('role-modal');
 const planSubtitle = document.getElementById('plan-subtitle');
+const studentSelector = document.getElementById('student-selector');
 
 const provider = new GoogleAuthProvider();
 
@@ -31,7 +43,7 @@ document.getElementById('aluno-btn').addEventListener('click', () => {
 });
 document.getElementById('personal-btn').addEventListener('click', () => handleRoleSelection('personal'));
 document.getElementById('link-personal-btn').addEventListener('click', handleLinkToPersonal);
-document.getElementById('student-selector').addEventListener('change', handleStudentSelection);
+studentSelector.addEventListener('change', handleStudentSelection);
 
 onAuthStateChanged(auth, async user => {
     if (user) {
@@ -40,7 +52,7 @@ onAuthStateChanged(auth, async user => {
 
         if (userDocSnap.exists()) {
             const userData = userDocSnap.data();
-            currentUser = { ...currentUser, uid: user.uid, ...userData };
+            currentUser = { uid: user.uid, ...userData };
 
             userInfo.classList.remove('hidden');
             loginButton.classList.add('hidden');
@@ -70,9 +82,7 @@ onAuthStateChanged(auth, async user => {
 async function handleRoleSelection(role) {
     const user = auth.currentUser;
     const userDocRef = doc(db, "users", user.uid);
-    const data = { role, displayName: user.displayName, email: user.email };
-
-    await setDoc(userDocRef, data);
+    await setDoc(userDocRef, { role, displayName: user.displayName, email: user.email });
 
     if (role === 'personal') {
         const personalPublicDocRef = doc(db, "personals", user.uid);
@@ -85,40 +95,41 @@ async function handleRoleSelection(role) {
 
 async function handleLinkToPersonal() {
     const personalId = document.getElementById('personal-code-input').value.trim();
-    if (!personalId) {
-        alert("Por favor, insira o código do seu personal.");
-        return;
-    }
-    const personalDocRef = doc(db, "personals", personalId);
-    const personalDocSnap = await getDoc(personalDocRef);
+    if (!personalId) return alert("Por favor, insira o código do seu personal.");
 
-    if (personalDocSnap.exists()) {
+    const personalPublicDocRef = doc(db, "personals", personalId);
+    const personalPublicSnap = await getDoc(personalPublicDocRef);
+
+    if (personalPublicSnap.exists()) {
         const user = auth.currentUser;
-        const userDocRef = doc(db, "users", user.uid);
-        await setDoc(userDocRef, {
-            role: 'aluno',
-            personalId,
-            displayName: user.displayName,
-            email: user.email
+        await setDoc(doc(db, "users", user.uid), {
+            role: 'aluno', personalId, displayName: user.displayName, email: user.email
         });
 
-        const planDocRef = doc(db, "plans", user.uid);
-        await setDoc(planDocRef, { plan: {}, personalId });
+        const personalDocRef = doc(db, "users", personalId);
+        await updateDoc(personalDocRef, {
+            students: arrayUnion({ id: user.uid, name: user.displayName })
+        });
+
+        await setDoc(doc(db, "plans", user.uid), { plan: {}, personalId });
 
         roleModal.classList.add('hidden');
         window.location.reload();
     } else {
-        alert("Código do Personal Trainer inválido. Verifique o código e tente novamente.");
+        alert("Código do Personal Trainer inválido.");
     }
 }
 
-async function loadStudentsForPersonal(personalId) {
-    const q = query(collection(db, "users"), where("personalId", "==", personalId));
-    const querySnapshot = await getDocs(q);
-    const selector = document.getElementById('student-selector');
-    selector.innerHTML = '<option value="">Selecione um aluno</option>';
-    querySnapshot.forEach((doc) => {
-        selector.innerHTML += `<option value="${doc.id}">${doc.data().displayName}</option>`;
+function loadStudentsForPersonal(personalId) {
+    const personalDocRef = doc(db, "users", personalId);
+    onSnapshot(personalDocRef, (docSnap) => {
+        if (docSnap.exists()) {
+            const students = docSnap.data().students || [];
+            selector.innerHTML = '<option value="">Selecione um aluno</option>';
+            students.forEach(student => {
+                selector.innerHTML += `<option value="${student.id}">${student.name}</option>`;
+            });
+        }
     });
 }
 
@@ -135,7 +146,9 @@ function handleStudentSelection(event) {
 
 function loadWorkoutForStudent(studentId, personalId) {
     const planDocRef = doc(db, "plans", studentId);
-    onSnapshot(planDocRef, (docSnap) => {
+    if (unsubscribePlanListener) unsubscribePlanListener();
+
+    unsubscribePlanListener = onSnapshot(planDocRef, (docSnap) => {
         if (docSnap.exists() && docSnap.data().personalId === personalId) {
             currentWorkoutData = docSnap.data().plan || {};
         } else {
@@ -147,9 +160,9 @@ function loadWorkoutForStudent(studentId, personalId) {
 
 async function saveToFirestore() {
     const studentId = currentUser.role === 'personal' ? currentUser.selectedStudentId : null;
-    if (!studentId) return; // Personal só salva se um aluno estiver selecionado
+    if (!studentId) return;
     const docRef = doc(db, "plans", studentId);
-    await setDoc(docRef, { plan: currentWorkoutData, personalId: currentUser.uid });
+    await setDoc(docRef, { plan: currentWorkoutData, personalId: currentUser.uid }, { merge: true });
 }
 
 function renderUI() {
@@ -249,7 +262,7 @@ Object.assign(window, {
         document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
         document.getElementById(tabId)?.classList.add('active');
         document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
-        document.getElementById(`btn-${tabId}`)?.classList.add('active');
+        document.getElementById(`btn-${tabId}`)?.parentElement.querySelector('.tab-button').classList.add('active');
     },
     addFicha: () => {
         const name = prompt("Nome da nova ficha:");
@@ -309,17 +322,26 @@ Object.assign(window, {
         const videoModal = document.getElementById('videoModal');
         const iframe = document.getElementById('videoFrame');
         let videoId;
-        if (url.includes('shorts/')) videoId = url.split('shorts/')[1].split('?')[0];
-        else videoId = new URL(url).searchParams.get('v');
-
-        if (videoId) {
-            iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-            videoModal.classList.remove('hidden');
-            videoModal.classList.add('flex');
-        }
+        try {
+            if (url.includes('shorts/')) videoId = url.split('/shorts/')[1].split('?')[0];
+            else videoId = new URL(url).searchParams.get('v');
+            if (videoId) {
+                iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+                videoModal.classList.remove('hidden');
+                videoModal.classList.add('flex');
+            }
+        } catch (e) { console.error('URL de vídeo inválida:', url, e); }
     },
     closeModal: (modalId) => {
         document.getElementById(modalId).classList.add('hidden');
         if (modalId === 'videoModal') document.getElementById('videoFrame').src = '';
+    }
+});
+
+window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        window.closeModal('videoModal');
+        window.closeModal('exerciseModal');
+        window.closeModal('role-modal');
     }
 });
