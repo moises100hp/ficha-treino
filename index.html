@@ -42,6 +42,17 @@
         </div>
     </div>
     
+    <!-- Error Notification -->
+    <div id="error-notification" class="hidden fixed top-5 right-5 bg-red-500 text-white p-4 rounded-lg shadow-xl max-w-sm z-50">
+        <div class="flex justify-between items-start">
+            <div>
+                <h4 class="font-bold">Erro de Configuração</h4>
+                <p id="error-message" class="mt-2 text-sm"></p>
+            </div>
+            <button onclick="hideErrorNotification()" class="ml-4 text-white text-2xl font-bold leading-none">&times;</button>
+        </div>
+    </div>
+    
     <div id="videoModal" class="fixed inset-0 bg-black bg-opacity-75 hidden justify-center items-center z-50 p-4" onclick="closeModal('videoModal')">
         <div class="bg-black p-1 rounded-lg w-full max-w-3xl relative" onclick="event.stopPropagation()">
             <button onclick="closeModal('videoModal')" class="absolute -top-8 -right-2 text-white text-4xl">&times;</button>
