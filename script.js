@@ -20,7 +20,6 @@ const tabsContainer = document.getElementById('tabs-container');
 const mainContentContainer = document.getElementById('main-content-container');
 const exerciseModal = document.getElementById('exerciseModal');
 const roleModal = document.getElementById('role-modal');
-const planSubtitle = document.getElementById('plan-subtitle');
 const studentSelector = document.getElementById('student-selector');
 
 const provider = new GoogleAuthProvider();
@@ -71,10 +70,12 @@ onAuthStateChanged(auth, async user => {
 
 async function handleRoleSelection(role) {
     const user = auth.currentUser;
-    await setDoc(doc(db, "users", user.uid), { role, displayName: user.displayName, email: user.email });
-    if (role === 'personal') {
+    await setDoc(doc(db, "users", user.uid), { role, displayName: user.displayName, email: user.email, students: [] }); 
+    
+    if(role === 'personal') {
          await setDoc(doc(db, "personals", user.uid), { displayName: user.displayName });
     }
+
     roleModal.classList.add('hidden');
     window.location.reload();
 }
@@ -98,7 +99,6 @@ async function handleLinkToPersonal() {
         });
 
         await setDoc(doc(db, "plans", user.uid), { plan: {}, personalId });
-
         roleModal.classList.add('hidden');
         window.location.reload();
     } else {
@@ -200,7 +200,7 @@ function renderUI() {
 function renderFichaContent(fichaId, isEditable) {
     const fichaContainer = document.getElementById(fichaId);
     fichaContainer.innerHTML = '';
-    const sections = currentWorkoutData[fichaId];
+    const sections = currentWorkoutData[fichaId] || {};
     const sectionKeys = Object.keys(sections);
 
     sectionKeys.forEach((sectionTitle, index) => {
