@@ -1,5 +1,4 @@
 import { firebaseConfig } from './firebase-config.js';
-import { firebaseConfig } from './firebase-config.js'; 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
 import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 import { getFirestore, doc, getDoc, setDoc, onSnapshot, collection, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
@@ -73,7 +72,7 @@ onAuthStateChanged(auth, async user => {
 async function handleRoleSelection(role) {
     const user = auth.currentUser;
     const userDocRef = doc(db, "users", user.uid);
-    await setDoc(userDocRef, { role, displayName: user.displayName, email: user.email, students: [] }); // Initialize students array for personal
+    await setDoc(userDocRef, { role, displayName: user.displayName, email: user.email, students: [] }); 
     
     if(role === 'personal') {
          const personalPublicDocRef = doc(db, "personals", user.uid);
@@ -247,7 +246,7 @@ function createExerciseCard(fichaId, sectionTitle, index, ex, isEditable) {
         </div>`;
 }
 
-// Attach functions to window object
+// Make functions globally available
 Object.assign(window, {
     showTab: (tabId) => {
         document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
