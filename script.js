@@ -92,9 +92,11 @@ async function handleLinkToPersonal() {
             role: 'aluno', personalId, displayName: user.displayName, email: user.email 
         });
         
-        const studentLinkRef = doc(db, "personals", personalId, "students", user.uid);
-        await setDoc(studentLinkRef, { name: user.displayName, email: user.email });
-        
+        const personalDocRef = doc(db, "users", personalId);
+        await updateDoc(personalDocRef, {
+            students: arrayUnion({ id: user.uid, name: user.displayName })
+        });
+
         await setDoc(doc(db, "plans", user.uid), { plan: {}, personalId });
 
         roleModal.classList.add('hidden');
@@ -105,12 +107,15 @@ async function handleLinkToPersonal() {
 }
 
 function loadStudentsForPersonal(personalId) {
-    const studentsCollRef = collection(db, "personals", personalId, "students");
-    onSnapshot(studentsCollRef, (querySnapshot) => {
-        studentSelector.innerHTML = '<option value="">Selecione um aluno</option>';
-        querySnapshot.forEach((doc) => {
-            studentSelector.innerHTML += `<option value="${doc.id}">${doc.data().name}</option>`;
-        });
+    const personalDocRef = doc(db, "users", personalId);
+    onSnapshot(personalDocRef, (docSnap) => {
+        if(docSnap.exists()){
+            const students = docSnap.data().students || [];
+            studentSelector.innerHTML = '<option value="">Selecione um aluno</option>';
+            students.forEach(student => {
+                studentSelector.innerHTML += `<option value="${student.id}">${student.name}</option>`;
+            });
+        }
     });
 }
 
@@ -196,17 +201,26 @@ function renderFichaContent(fichaId, isEditable) {
     const fichaContainer = document.getElementById(fichaId);
     fichaContainer.innerHTML = '';
     const sections = currentWorkoutData[fichaId];
+    const sectionKeys = Object.keys(sections);
 
-    for(const sectionTitle in sections) {
+    sectionKeys.forEach((sectionTitle, index) => {
         const sectionEl = document.createElement('div');
+        
+        let moveButtonsHTML = '';
+        if(isEditable) {
+            const upArrow = index > 0 ? `<button class="arrow-btn" onclick="moveSection('${fichaId}', '${sectionTitle}', 'up')">▲</button>` : `<span class="arrow-btn opacity-25">▲</span>`;
+            const downArrow = index < sectionKeys.length - 1 ? `<button class="arrow-btn" onclick="moveSection('${fichaId}', '${sectionTitle}', 'down')">▼</button>` : `<span class="arrow-btn opacity-25">▼</span>`;
+            moveButtonsHTML = `<div class="flex flex-col">${upArrow}${downArrow}</div>`;
+        }
+
         let deleteBtnHTML = isEditable ? `<button onclick="deleteSection('${fichaId}', '${sectionTitle}')" class="text-red-500 hover:text-red-700 font-bold p-2 text-xl" title="Remover Seção">×</button>` : '';
-        sectionEl.innerHTML = `<div class="section-header"><h2 class="section-title">${sectionTitle}</h2>${deleteBtnHTML}</div>`;
+        sectionEl.innerHTML = `<div class="section-header"><div class="flex items-center">${moveButtonsHTML}<h2 class="section-title ml-2">${sectionTitle}</h2></div>${deleteBtnHTML}</div>`;
         const exercisesContainer = document.createElement('div');
         exercisesContainer.className = 'space-y-4';
         
         if (Array.isArray(sections[sectionTitle])) {
-            sections[sectionTitle].forEach((ex, index) => {
-                exercisesContainer.innerHTML += createExerciseCard(fichaId, sectionTitle, index, ex, isEditable);
+            sections[sectionTitle].forEach((ex, exIndex) => {
+                exercisesContainer.innerHTML += createExerciseCard(fichaId, sectionTitle, exIndex, ex, isEditable);
             });
         }
         
@@ -215,7 +229,7 @@ function renderFichaContent(fichaId, isEditable) {
             sectionEl.innerHTML += `<div class="mt-4"><button onclick="openExerciseModal('${fichaId}', '${sectionTitle}')" class="bg-gray-500 text-white py-1 px-3 rounded-md hover:bg-gray-600 text-sm">+ Adicionar Exercício</button></div>`;
         }
         fichaContainer.appendChild(sectionEl);
-    }
+    });
     
     if (isEditable) {
         const addSectionButton = document.createElement('button');
@@ -274,6 +288,26 @@ Object.assign(window, {
             renderFichaContent(fichaId, true);
             saveToFirestore();
         }
+    },
+    moveSection: (fichaId, sectionTitle, direction) => {
+        const sections = currentWorkoutData[fichaId];
+        const keys = Object.keys(sections);
+        const currentIndex = keys.indexOf(sectionTitle);
+        const newIndex = direction === 'up' ? currentIndex - 1 : currentIndex + 1;
+        
+        if (newIndex < 0 || newIndex >= keys.length) return;
+        
+        const newOrderedSections = {};
+        const tempKey = keys[currentIndex];
+        keys[currentIndex] = keys[newIndex];
+        keys[newIndex] = tempKey;
+
+        for(const key of keys) {
+            newOrderedSections[key] = sections[key];
+        }
+        currentWorkoutData[fichaId] = newOrderedSections;
+        renderFichaContent(fichaId, true);
+        saveToFirestore();
     },
     openExerciseModal: (fichaId, sectionTitle) => {
         exerciseModal.dataset.fichaId = fichaId;
