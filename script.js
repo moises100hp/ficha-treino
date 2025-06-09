@@ -190,7 +190,7 @@ function renderUI() {
 
         const bulkAddButton = document.createElement('button');
         bulkAddButton.className = "ml-4 bg-yellow-500 text-black py-2 px-4 rounded-lg font-medium hover:bg-yellow-600 transition-colors";
-        bulkAddButton.textContent = "Adicionar em Massa";
+        bulkAddButton.textContent = "Criar Ficha em Massa";
         bulkAddButton.onclick = openBulkCreateModal;
 
         tabsContainer.appendChild(addFichaButton);
@@ -259,156 +259,172 @@ function createExerciseCard(fichaId, sectionTitle, index, ex, isEditable) {
 
 // Make functions globally available
 Object.assign(window, {
-    showTab: (tabId) => {
-        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-        document.getElementById(tabId)?.classList.add('active');
-        document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
-        document.getElementById(`btn-${tabId}`)?.parentElement.querySelector('.tab-button').classList.add('active');
-    },
-    addFicha: () => {
-        const name = prompt("Nome da nova ficha:");
-        if (name && !currentWorkoutData[name]) {
-            currentWorkoutData[name] = {};
-            renderUI();
-            saveToFirestore();
-        }
-    },
-    deleteFicha: (fichaId) => {
-        if (confirm(`Remover a ficha "${fichaId}"?`)) {
-            delete currentWorkoutData[fichaId];
-            renderUI();
-            saveToFirestore();
-        }
-    },
-    addSection: (fichaId) => {
-        const name = prompt("Nome da nova seção:");
-        if (name && !currentWorkoutData[fichaId][name]) {
-            currentWorkoutData[fichaId][name] = [];
-            renderFichaContent(fichaId, true);
-            saveToFirestore();
-        }
-    },
-    deleteSection: (fichaId, sectionTitle) => {
-        if (confirm(`Remover a seção "${sectionTitle}"?`)) {
-            delete currentWorkoutData[fichaId][sectionTitle];
-            renderFichaContent(fichaId, true);
-            saveToFirestore();
-        }
-    },
-    moveSection: (fichaId, sectionTitle, direction) => {
-        const sections = currentWorkoutData[fichaId];
-        const keys = Object.keys(sections);
-        const currentIndex = keys.indexOf(sectionTitle);
-        const newIndex = direction === 'up' ? currentIndex - 1 : currentIndex + 1;
-
-        if (newIndex < 0 || newIndex >= keys.length) return;
-
-        [keys[currentIndex], keys[newIndex]] = [keys[newIndex], keys[currentIndex]];
-
-        const newOrderedSections = {};
-        for (const key of keys) {
-            newOrderedSections[key] = sections[key];
-        }
-        currentWorkoutData[fichaId] = newOrderedSections;
-        renderFichaContent(fichaId, true);
-        saveToFirestore();
-    },
-    openExerciseModal: (fichaId, sectionTitle) => {
-        exerciseModal.dataset.fichaId = fichaId;
-        exerciseModal.dataset.sectionTitle = sectionTitle;
-        document.getElementById('new-exercise-name').value = '';
-        document.getElementById('new-exercise-details').value = '';
-        document.getElementById('new-exercise-video').value = '';
-        exerciseModal.classList.remove('hidden');
-        exerciseModal.classList.add('flex');
-    },
-    saveNewExercise: () => {
-        const { fichaId, sectionTitle } = exerciseModal.dataset;
-        const newEx = {
-            name: document.getElementById('new-exercise-name').value,
-            details: document.getElementById('new-exercise-details').value,
-            video: document.getElementById('new-exercise-video').value
-        };
-        if (!newEx.name) return alert("O nome é obrigatório.");
-        currentWorkoutData[fichaId][sectionTitle].push(newEx);
-        renderFichaContent(fichaId, true);
-        closeModal('exerciseModal');
-        saveToFirestore();
-    },
-    deleteExercise: (fichaId, sectionTitle, index) => {
-        currentWorkoutData[fichaId][sectionTitle].splice(index, 1);
-        renderFichaContent(fichaId, true);
-        saveToFirestore();
-    },
-    openModal: (url) => {
-        const videoModal = document.getElementById('videoModal');
-        const iframe = document.getElementById('videoFrame');
-        let videoId;
-        try {
-            if (url.includes('shorts/')) videoId = url.split('/shorts/')[1].split('?')[0];
-            else videoId = new URL(url).searchParams.get('v');
-            if (videoId) {
-                iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-                videoModal.classList.remove('hidden');
-                videoModal.classList.add('flex');
-            }
-        } catch (e) { console.error('URL de vídeo inválida:', url, e); }
-    },
-    closeModal: (modalId) => {
-        document.getElementById(modalId).classList.add('hidden');
-        if (modalId === 'videoModal') document.getElementById('videoFrame').src = '';
-    },
-    openBulkCreateModal: () => {
-        bulkCreateModal.classList.remove('hidden');
-        bulkCreateModal.classList.add('flex');
-    },
-    handleBulkCreate: () => {
-        const fichaName = document.getElementById('bulk-student-name').value.trim();
-        if (!fichaName) return alert("Por favor, insira o nome da ficha.");
-        if (currentWorkoutData[fichaName]) return alert("Já existe uma ficha com este nome.");
-
-        const text = document.getElementById('bulk-text-input').value;
-        const lines = text.split('\n').map(l => l.trim()).filter(l => l);
-
-        const newFichaData = {};
-        let currentSection = 'Exercícios Diversos';
-        const youtubeRegex = /^(?:https?:\/\/)?(?:www\.|m\.)?(?:youtube\.com|youtu\.be)\S*$/i;
-
-        lines.forEach(line => {
-            if (line.startsWith('# ')) {
-                currentSection = line.substring(2).trim();
-                if (!newFichaData[currentSection]) newFichaData[currentSection] = [];
-            } else if (!youtubeRegex.test(line)) {
-                const matchEx = line.match(/^(.+?)(?:\s*[-–]\s*|\s+)(\d+\s*[xX]\s*\d+(?:-\d+)?)$/);
-                let name = line;
-                let details = 'A definir';
-                if (matchEx) {
-                    name = matchEx[1].trim();
-                    details = matchEx[2].trim();
-                }
-                if (!newFichaData[currentSection]) newFichaData[currentSection] = [];
-                newFichaData[currentSection].push({ name, details, video: '' });
-            } else {
-                const sectionExercises = newFichaData[currentSection];
-                if (sectionExercises && sectionExercises.length > 0) {
-                    sectionExercises[sectionExercises.length - 1].video = line;
-                }
-            }
-        });
-
-        currentWorkoutData[fichaName] = newFichaData;
-        renderUI();
-        showTab(fichaName);
-        saveToFirestore();
-        closeModal('bulk-create-modal');
-    }
+    showTab, addFicha, deleteFicha, addSection, deleteSection, moveSection,
+    openExerciseModal, saveNewExercise, deleteExercise, openModal, closeModal,
+    openBulkCreateModal, handleBulkCreate
 });
+
+function showTab(tabId) {
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    document.getElementById(tabId)?.classList.add('active');
+    document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+    document.getElementById(`btn-${tabId}`)?.parentElement.querySelector('.tab-button').classList.add('active');
+}
+
+function addFicha() {
+    const name = prompt("Nome da nova ficha:");
+    if (name && !currentWorkoutData[name]) {
+        currentWorkoutData[name] = {};
+        renderUI();
+        saveToFirestore();
+    }
+}
+
+function deleteFicha(fichaId) {
+    if (confirm(`Remover a ficha "${fichaId}"?`)) {
+        delete currentWorkoutData[fichaId];
+        renderUI();
+        saveToFirestore();
+    }
+}
+
+function addSection(fichaId) {
+    const name = prompt("Nome da nova seção:");
+    if (name && !currentWorkoutData[fichaId][name]) {
+        currentWorkoutData[fichaId][name] = [];
+        renderFichaContent(fichaId, true);
+        saveToFirestore();
+    }
+}
+
+function deleteSection(fichaId, sectionTitle) {
+    if (confirm(`Remover a seção "${sectionTitle}"?`)) {
+        delete currentWorkoutData[fichaId][sectionTitle];
+        renderFichaContent(fichaId, true);
+        saveToFirestore();
+    }
+}
+
+function moveSection(fichaId, sectionTitle, direction) {
+    const sections = currentWorkoutData[fichaId];
+    const keys = Object.keys(sections);
+    const currentIndex = keys.indexOf(sectionTitle);
+    const newIndex = direction === 'up' ? currentIndex - 1 : currentIndex + 1;
+
+    if (newIndex < 0 || newIndex >= keys.length) return;
+
+    [keys[currentIndex], keys[newIndex]] = [keys[newIndex], keys[currentIndex]];
+
+    const newOrderedSections = {};
+    for (const key of keys) {
+        newOrderedSections[key] = sections[key];
+    }
+    currentWorkoutData[fichaId] = newOrderedSections;
+    renderFichaContent(fichaId, true);
+    saveToFirestore();
+}
+
+function openExerciseModal(fichaId, sectionTitle) {
+    exerciseModal.dataset.fichaId = fichaId;
+    exerciseModal.dataset.sectionTitle = sectionTitle;
+    document.getElementById('new-exercise-name').value = '';
+    document.getElementById('new-exercise-details').value = '';
+    document.getElementById('new-exercise-video').value = '';
+    exerciseModal.classList.remove('hidden');
+    exerciseModal.classList.add('flex');
+}
+
+function saveNewExercise() {
+    const { fichaId, sectionTitle } = exerciseModal.dataset;
+    const newEx = {
+        name: document.getElementById('new-exercise-name').value,
+        details: document.getElementById('new-exercise-details').value,
+        video: document.getElementById('new-exercise-video').value
+    };
+    if (!newEx.name) return alert("O nome é obrigatório.");
+    currentWorkoutData[fichaId][sectionTitle].push(newEx);
+    renderFichaContent(fichaId, true);
+    closeModal('exerciseModal');
+    saveToFirestore();
+}
+
+function deleteExercise(fichaId, sectionTitle, index) {
+    currentWorkoutData[fichaId][sectionTitle].splice(index, 1);
+    renderFichaContent(fichaId, true);
+    saveToFirestore();
+}
+
+function openModal(url) {
+    const videoModal = document.getElementById('videoModal');
+    const iframe = document.getElementById('videoFrame');
+    let videoId;
+    try {
+        if (url.includes('shorts/')) videoId = url.split('/shorts/')[1].split('?')[0];
+        else videoId = new URL(url).searchParams.get('v');
+        if (videoId) {
+            iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+            videoModal.classList.remove('hidden');
+            videoModal.classList.add('flex');
+        }
+    } catch (e) { console.error('URL de vídeo inválida:', url, e); }
+}
+
+function closeModal(modalId) {
+    document.getElementById(modalId).classList.add('hidden');
+    if (modalId === 'videoModal') document.getElementById('videoFrame').src = '';
+}
+
+function openBulkCreateModal() {
+    bulkCreateModal.classList.remove('hidden');
+    bulkCreateModal.classList.add('flex');
+}
+
+function handleBulkCreate() {
+    const fichaName = prompt("Digite o nome para esta nova ficha:");
+    if (!fichaName) return;
+    if (currentWorkoutData[fichaName]) return alert("Já existe uma ficha com este nome.");
+
+    const text = document.getElementById('bulk-text-input').value;
+    const lines = text.split('\n').map(l => l.trim()).filter(l => l);
+
+    const newFichaData = {};
+    let currentSection = 'Exercícios Diversos';
+    const youtubeRegex = /^(?:https?:\/\/)?(?:www\.|m\.)?(?:youtube\.com|youtu\.be)\S*$/i;
+
+    lines.forEach(line => {
+        if (line.startsWith('# ')) {
+            currentSection = line.substring(2).trim();
+            if (!newFichaData[currentSection]) newFichaData[currentSection] = [];
+        } else if (!youtubeRegex.test(line)) {
+            const matchEx = line.match(/^(.+?)(?:\s*[-–]\s*|\s+)(\d+\s*[xX]\s*\d+(?:-\d+)?)$/);
+            let name = line;
+            let details = 'A definir';
+            if (matchEx) {
+                name = matchEx[1].trim();
+                details = matchEx[2].trim();
+            }
+            if (!newFichaData[currentSection]) newFichaData[currentSection] = [];
+            newFichaData[currentSection].push({ name, details, video: '' });
+        } else {
+            const sectionExercises = newFichaData[currentSection];
+            if (sectionExercises && sectionExercises.length > 0) {
+                sectionExercises[sectionExercises.length - 1].video = line;
+            }
+        }
+    });
+
+    currentWorkoutData[fichaName] = newFichaData;
+    renderUI();
+    showTab(fichaName);
+    saveToFirestore();
+    closeModal('bulk-create-modal');
+}
 
 window.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
-        window.closeModal('videoModal');
-        window.closeModal('exerciseModal');
-        window.closeModal('bulk-create-modal');
-        window.closeModal('role-modal');
+        closeModal('videoModal');
+        closeModal('exerciseModal');
+        closeModal('bulk-create-modal');
+        closeModal('role-modal');
     }
 });
