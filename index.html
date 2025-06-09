@@ -156,6 +156,7 @@
             const bulkCreateModal = document.getElementById('bulk-create-modal');
             const roleModal = document.getElementById('role-modal');
             const studentSelector = document.getElementById('student-selector');
+            const bulkAddBtn = document.getElementById('bulk-add-btn');
 
             const provider = new GoogleAuthProvider();
 
@@ -168,7 +169,7 @@
             document.getElementById('personal-btn').addEventListener('click', () => handleRoleSelection('personal'));
             document.getElementById('link-personal-btn').addEventListener('click', handleLinkToPersonal);
             studentSelector.addEventListener('change', handleStudentSelection);
-            document.getElementById('bulk-add-btn')?.addEventListener('click', openBulkCreateModal);
+            if(bulkAddBtn) bulkAddBtn.addEventListener('click', openBulkCreateModal);
 
             getRedirectResult(auth).catch(error => {
                 console.error("Erro no redirecionamento:", error);
@@ -216,8 +217,8 @@
 
             async function handleRoleSelection(role) {
                 const user = auth.currentUser;
-                await setDoc(doc(db, "users", user.uid), { role, displayName: user.displayName, email: user.email, students: [] }); 
-                if(role === 'personal') {
+                await setDoc(doc(db, "users", user.uid), { role, displayName: user.displayName, email: user.email });
+                if (role === 'personal') {
                      await setDoc(doc(db, "personals", user.uid), { displayName: user.displayName });
                 }
                 roleModal.classList.add('hidden');
@@ -237,10 +238,8 @@
                         role: 'aluno', personalId, displayName: user.displayName, email: user.email 
                     });
                     
-                    const personalDocRef = doc(db, "users", personalId);
-                    await updateDoc(personalDocRef, {
-                        students: arrayUnion({ id: user.uid, name: user.displayName })
-                    });
+                    const studentLinkRef = doc(db, "personals", personalId, "students", user.uid);
+                    await setDoc(studentLinkRef, { name: user.displayName });
 
                     await setDoc(doc(db, "plans", user.uid), { plan: { fichas: [] }, personalId });
                     roleModal.classList.add('hidden');
@@ -251,15 +250,15 @@
             }
 
             function loadStudentsForPersonal(personalId) {
-                const personalDocRef = doc(db, "users", personalId);
-                onSnapshot(personalDocRef, (docSnap) => {
-                    if(docSnap.exists()){
-                        const students = docSnap.data().students || [];
-                        studentSelector.innerHTML = '<option value="">Selecione um aluno</option>';
-                        students.forEach(student => {
-                            studentSelector.innerHTML += `<option value="${student.id}">${student.name}</option>`;
-                        });
-                    }
+                const studentsCollRef = collection(db, "personals", personalId, "students");
+                onSnapshot(studentsCollRef, (querySnapshot) => {
+                    studentSelector.innerHTML = '<option value="">Selecione um aluno</option>';
+                    querySnapshot.forEach((doc) => {
+                        studentSelector.innerHTML += `<option value="${doc.id}">${doc.data().name}</option>`;
+                    });
+                }, (error) => {
+                    console.error("Erro ao carregar alunos:", error);
+                    alert("Não foi possível carregar a lista de alunos. Verifique as permissões do Firestore.");
                 });
             }
 
