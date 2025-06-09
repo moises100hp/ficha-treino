@@ -1,6 +1,6 @@
 import { firebaseConfig } from './firebase-config.js';
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithRedirect, getRedirectResult, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 import { getFirestore, doc, getDoc, setDoc, onSnapshot, collection, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
 const app = initializeApp(firebaseConfig);
@@ -8,7 +8,7 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 let currentUser = { uid: null, role: null, personalId: null, selectedStudentId: null };
-let currentWorkoutData = {};
+let currentWorkoutData = { fichas: [] }; // Alterado para um array de fichas
 let unsubscribePlanListener;
 
 const loginButton = document.getElementById('login-button');
@@ -25,7 +25,7 @@ const studentSelector = document.getElementById('student-selector');
 
 const provider = new GoogleAuthProvider();
 
-loginButton.addEventListener('click', () => signInWithPopup(auth, provider));
+loginButton.addEventListener('click', () => signInWithRedirect(auth, provider));
 logoutButton.addEventListener('click', () => signOut(auth));
 document.getElementById('aluno-btn').addEventListener('click', () => {
     document.getElementById('role-choice-buttons').classList.add('hidden');
@@ -35,6 +35,8 @@ document.getElementById('personal-btn').addEventListener('click', () => handleRo
 document.getElementById('link-personal-btn').addEventListener('click', handleLinkToPersonal);
 studentSelector.addEventListener('change', handleStudentSelection);
 document.getElementById('bulk-add-btn')?.addEventListener('click', openBulkCreateModal);
+
+getRedirectResult(auth).catch(error => console.error("Erro no redirecionamento:", error));
 
 onAuthStateChanged(auth, async user => {
     if (user) {
@@ -72,7 +74,7 @@ onAuthStateChanged(auth, async user => {
 
 async function handleRoleSelection(role) {
     const user = auth.currentUser;
-    await setDoc(doc(db, "users", user.uid), { role, displayName: user.displayName, email: user.email, students: [] });
+    await setDoc(doc(db, "users", user.uid), { role, displayName: user.displayName, email: user.email });
     if (role === 'personal') {
         await setDoc(doc(db, "personals", user.uid), { displayName: user.displayName });
     }
@@ -93,12 +95,10 @@ async function handleLinkToPersonal() {
             role: 'aluno', personalId, displayName: user.displayName, email: user.email
         });
 
-        const personalDocRef = doc(db, "users", personalId);
-        await updateDoc(personalDocRef, {
-            students: arrayUnion({ id: user.uid, name: user.displayName })
-        });
+        const studentLinkRef = doc(db, "personals", personalId, "students", user.uid);
+        await setDoc(studentLinkRef, { name: user.displayName });
 
-        await setDoc(doc(db, "plans", user.uid), { plan: {}, personalId });
+        await setDoc(doc(db, "plans", user.uid), { plan: { fichas: [] }, personalId });
         roleModal.classList.add('hidden');
         window.location.reload();
     } else {
@@ -107,15 +107,12 @@ async function handleLinkToPersonal() {
 }
 
 function loadStudentsForPersonal(personalId) {
-    const personalDocRef = doc(db, "users", personalId);
-    onSnapshot(personalDocRef, (docSnap) => {
-        if (docSnap.exists()) {
-            const students = docSnap.data().students || [];
-            studentSelector.innerHTML = '<option value="">Selecione um aluno</option>';
-            students.forEach(student => {
-                studentSelector.innerHTML += `<option value="${student.id}">${student.name}</option>`;
-            });
-        }
+    const studentsCollRef = collection(db, "personals", personalId, "students");
+    onSnapshot(studentsCollRef, (querySnapshot) => {
+        studentSelector.innerHTML = '<option value="">Selecione um aluno</option>';
+        querySnapshot.forEach((doc) => {
+            studentSelector.innerHTML += `<option value="${doc.id}">${doc.data().name}</option>`;
+        });
     });
 }
 
@@ -136,9 +133,9 @@ function loadWorkoutForStudent(studentId, personalId) {
 
     unsubscribePlanListener = onSnapshot(planDocRef, (docSnap) => {
         if (docSnap.exists() && docSnap.data().personalId === personalId) {
-            currentWorkoutData = docSnap.data().plan || {};
+            currentWorkoutData = docSnap.data().plan || { fichas: [] };
         } else {
-            currentWorkoutData = {};
+            currentWorkoutData = { fichas: [] };
         }
         renderUI();
     });
@@ -156,33 +153,31 @@ function renderUI() {
     mainContentContainer.innerHTML = '';
     const isEditable = currentUser.role === 'personal' && currentUser.selectedStudentId;
 
-    const fichaKeys = Object.keys(currentWorkoutData);
-
-    fichaKeys.forEach(fichaId => {
+    (currentWorkoutData.fichas || []).forEach(ficha => {
         const tabGroup = document.createElement('div');
         tabGroup.className = "tab-button-group";
         const tabButton = document.createElement('button');
         tabButton.className = "tab-button flex-1 sm:flex-none text-center py-2 px-4 font-semibold transition-all duration-300";
-        tabButton.textContent = fichaId;
-        tabButton.id = `btn-${fichaId}`;
-        tabButton.onclick = () => showTab(fichaId);
+        tabButton.textContent = ficha.name;
+        tabButton.id = `btn-${ficha.id}`;
+        tabButton.onclick = () => showTab(ficha.id);
         tabGroup.appendChild(tabButton);
         if (isEditable) {
             const deleteFichaBtn = document.createElement('button');
             deleteFichaBtn.className = "text-red-400 hover:text-red-600 font-bold px-2";
             deleteFichaBtn.innerHTML = '×';
-            deleteFichaBtn.title = `Remover ${fichaId}`;
-            deleteFichaBtn.onclick = () => deleteFicha(fichaId);
+            deleteFichaBtn.title = `Remover ${ficha.name}`;
+            deleteFichaBtn.onclick = () => deleteFicha(ficha.id);
             tabGroup.appendChild(deleteFichaBtn);
         }
         tabsContainer.appendChild(tabGroup);
 
         const contentDiv = document.createElement('div');
-        contentDiv.id = fichaId;
+        contentDiv.id = ficha.id;
         contentDiv.className = "tab-content";
         mainContentContainer.appendChild(contentDiv);
 
-        renderFichaContent(fichaId, isEditable);
+        renderFichaContent(ficha.id, isEditable);
     });
 
     if (isEditable) {
@@ -200,42 +195,43 @@ function renderUI() {
         tabsContainer.appendChild(bulkAddButton);
     }
 
-    const firstFicha = Object.keys(currentWorkoutData)[0];
-    if (firstFicha) {
-        showTab(firstFicha);
+    if (currentWorkoutData.fichas && currentWorkoutData.fichas.length > 0) {
+        showTab(currentWorkoutData.fichas[0].id);
     }
 }
 
 function renderFichaContent(fichaId, isEditable) {
+    const ficha = currentWorkoutData.fichas.find(f => f.id === fichaId);
+    if (!ficha) return;
+
     const fichaContainer = document.getElementById(fichaId);
     fichaContainer.innerHTML = '';
-    const sections = currentWorkoutData[fichaId] || {};
-    const sectionKeys = Object.keys(sections);
+    const sections = ficha.sections || [];
 
-    sectionKeys.forEach((sectionTitle, index) => {
+    sections.forEach((section, index) => {
         const sectionEl = document.createElement('div');
 
         let moveButtonsHTML = '';
         if (isEditable) {
-            const upArrow = index > 0 ? `<button class="arrow-btn" onclick="moveSection('${fichaId}', '${sectionTitle}', 'up')">▲</button>` : `<span class="arrow-btn opacity-25">▲</span>`;
-            const downArrow = index < sectionKeys.length - 1 ? `<button class="arrow-btn" onclick="moveSection('${fichaId}', '${sectionTitle}', 'down')">▼</button>` : `<span class="arrow-btn opacity-25">▼</span>`;
+            const upArrow = index > 0 ? `<button class="arrow-btn" onclick="moveSection('${fichaId}', '${section.title}', 'up')">▲</button>` : `<span class="arrow-btn opacity-25">▲</span>`;
+            const downArrow = index < sections.length - 1 ? `<button class="arrow-btn" onclick="moveSection('${fichaId}', '${section.title}', 'down')">▼</button>` : `<span class="arrow-btn opacity-25">▼</span>`;
             moveButtonsHTML = `<div class="flex flex-col">${upArrow}${downArrow}</div>`;
         }
 
-        let deleteBtnHTML = isEditable ? `<button onclick="deleteSection('${fichaId}', '${sectionTitle}')" class="text-red-500 hover:text-red-700 font-bold p-2 text-xl" title="Remover Seção">×</button>` : '';
-        sectionEl.innerHTML = `<div class="section-header"><div class="flex items-center">${moveButtonsHTML}<h2 class="section-title ml-2">${sectionTitle}</h2></div>${deleteBtnHTML}</div>`;
+        let deleteBtnHTML = isEditable ? `<button onclick="deleteSection('${fichaId}', '${section.title}')" class="text-red-500 hover:text-red-700 font-bold p-2 text-xl" title="Remover Seção">×</button>` : '';
+        sectionEl.innerHTML = `<div class="section-header"><div class="flex items-center">${moveButtonsHTML}<h2 class="section-title ml-2">${section.title}</h2></div>${deleteBtnHTML}</div>`;
         const exercisesContainer = document.createElement('div');
         exercisesContainer.className = 'space-y-4';
 
-        if (Array.isArray(sections[sectionTitle])) {
-            sections[sectionTitle].forEach((ex, exIndex) => {
-                exercisesContainer.innerHTML += createExerciseCard(fichaId, sectionTitle, exIndex, ex, isEditable);
+        if (Array.isArray(section.exercises)) {
+            section.exercises.forEach((ex, exIndex) => {
+                exercisesContainer.innerHTML += createExerciseCard(fichaId, section.title, exIndex, ex, isEditable);
             });
         }
 
         sectionEl.appendChild(exercisesContainer);
         if (isEditable) {
-            sectionEl.innerHTML += `<div class="mt-4"><button onclick="openExerciseModal('${fichaId}', '${sectionTitle}')" class="bg-gray-500 text-white py-1 px-3 rounded-md hover:bg-gray-600 text-sm">+ Adicionar Exercício</button></div>`;
+            sectionEl.innerHTML += `<div class="mt-4"><button onclick="openExerciseModal('${fichaId}', '${section.title}')" class="bg-gray-500 text-white py-1 px-3 rounded-md hover:bg-gray-600 text-sm">+ Adicionar Exercício</button></div>`;
         }
         fichaContainer.appendChild(sectionEl);
     });
@@ -276,16 +272,16 @@ function showTab(tabId) {
 
 function addFicha() {
     const name = prompt("Nome da nova ficha:");
-    if (name && !currentWorkoutData[name]) {
-        currentWorkoutData[name] = {};
+    if (name && !currentWorkoutData.fichas.find(f => f.name === name)) {
+        currentWorkoutData.fichas.push({ id: `ficha-${Date.now()}`, name, sections: [] });
         renderUI();
         saveToFirestore();
     }
 }
 
 function deleteFicha(fichaId) {
-    if (confirm(`Remover a ficha "${fichaId}"?`)) {
-        delete currentWorkoutData[fichaId];
+    if (confirm(`Remover a ficha?`)) {
+        currentWorkoutData.fichas = currentWorkoutData.fichas.filter(f => f.id !== fichaId);
         renderUI();
         saveToFirestore();
     }
@@ -293,36 +289,33 @@ function deleteFicha(fichaId) {
 
 function addSection(fichaId) {
     const name = prompt("Nome da nova seção:");
-    if (name && !currentWorkoutData[fichaId][name]) {
-        currentWorkoutData[fichaId][name] = [];
+    const ficha = currentWorkoutData.fichas.find(f => f.id === fichaId);
+    if (name && ficha && !ficha.sections.find(s => s.title === name)) {
+        ficha.sections.push({ title: name, exercises: [] });
         renderFichaContent(fichaId, true);
         saveToFirestore();
     }
 }
 
 function deleteSection(fichaId, sectionTitle) {
-    if (confirm(`Remover a seção "${sectionTitle}"?`)) {
-        delete currentWorkoutData[fichaId][sectionTitle];
+    const ficha = currentWorkoutData.fichas.find(f => f.id === fichaId);
+    if (ficha && confirm(`Remover a seção "${sectionTitle}"?`)) {
+        ficha.sections = ficha.sections.filter(s => s.title !== sectionTitle);
         renderFichaContent(fichaId, true);
         saveToFirestore();
     }
 }
 
 function moveSection(fichaId, sectionTitle, direction) {
-    const sections = currentWorkoutData[fichaId];
-    const keys = Object.keys(sections);
-    const currentIndex = keys.indexOf(sectionTitle);
+    const ficha = currentWorkoutData.fichas.find(f => f.id === fichaId);
+    if (!ficha) return;
+    const sections = ficha.sections;
+    const currentIndex = sections.findIndex(s => s.title === sectionTitle);
     const newIndex = direction === 'up' ? currentIndex - 1 : currentIndex + 1;
 
-    if (newIndex < 0 || newIndex >= keys.length) return;
+    if (newIndex < 0 || newIndex >= sections.length) return;
 
-    [keys[currentIndex], keys[newIndex]] = [keys[newIndex], keys[currentIndex]];
-
-    const newOrderedSections = {};
-    for (const key of keys) {
-        newOrderedSections[key] = sections[key];
-    }
-    currentWorkoutData[fichaId] = newOrderedSections;
+    [sections[currentIndex], sections[newIndex]] = [sections[newIndex], sections[currentIndex]];
     renderFichaContent(fichaId, true);
     saveToFirestore();
 }
@@ -345,16 +338,24 @@ function saveNewExercise() {
         video: document.getElementById('new-exercise-video').value
     };
     if (!newEx.name) return alert("O nome é obrigatório.");
-    currentWorkoutData[fichaId][sectionTitle].push(newEx);
-    renderFichaContent(fichaId, true);
-    closeModal('exerciseModal');
-    saveToFirestore();
+    const ficha = currentWorkoutData.fichas.find(f => f.id === fichaId);
+    const section = ficha?.sections.find(s => s.title === sectionTitle);
+    if (section) {
+        section.exercises.push(newEx);
+        renderFichaContent(fichaId, true);
+        closeModal('exerciseModal');
+        saveToFirestore();
+    }
 }
 
 function deleteExercise(fichaId, sectionTitle, index) {
-    currentWorkoutData[fichaId][sectionTitle].splice(index, 1);
-    renderFichaContent(fichaId, true);
-    saveToFirestore();
+    const ficha = currentWorkoutData.fichas.find(f => f.id === fichaId);
+    const section = ficha?.sections.find(s => s.title === sectionTitle);
+    if (section) {
+        section.exercises.splice(index, 1);
+        renderFichaContent(fichaId, true);
+        saveToFirestore();
+    }
 }
 
 function openModal(url) {
@@ -386,35 +387,32 @@ function handleBulkCreate() {
     const text = document.getElementById('bulk-text-input').value;
     const lines = text.split('\n').map(l => l.trim()).filter(l => l);
 
-    const newPlanData = {};
-    let currentFichaName = null;
-    let currentSectionName = null;
+    const newPlan = { fichas: [] };
+    let currentFicha = null;
+    let currentSection = null;
     const youtubeRegex = /^(?:https?:\/\/)?(?:www\.|m\.)?(?:youtube\.com|youtu\.be)\S*$/i;
 
     lines.forEach(line => {
         if (line.startsWith('## ')) {
-            currentFichaName = line.substring(3).trim();
-            if (!newPlanData[currentFichaName]) {
-                newPlanData[currentFichaName] = {};
-            }
-            currentSectionName = null;
+            const fichaName = line.substring(3).trim();
+            currentFicha = { id: `ficha-${Date.now()}-${Math.random()}`, name: fichaName, sections: [] };
+            newPlan.fichas.push(currentFicha);
+            currentSection = null;
         } else if (line.startsWith('# ')) {
-            if (!currentFichaName) currentFichaName = "Ficha Sem Nome";
-            if (!newPlanData[currentFichaName]) newPlanData[currentFichaName] = {};
-
-            currentSectionName = line.substring(2).trim();
-            if (!newPlanData[currentFichaName][currentSectionName]) {
-                newPlanData[currentFichaName][currentSectionName] = [];
+            if (!currentFicha) {
+                currentFicha = { id: `ficha-${Date.now()}`, name: "Nova Ficha", sections: [] };
+                newPlan.fichas.push(currentFicha);
             }
+            const sectionName = line.substring(2).trim();
+            currentSection = { title: sectionName, exercises: [] };
+            currentFicha.sections.push(currentSection);
+
         } else if (youtubeRegex.test(line)) {
-            if (currentFichaName && currentSectionName) {
-                const sectionExercises = newPlanData[currentFichaName][currentSectionName];
-                if (sectionExercises && sectionExercises.length > 0) {
-                    sectionExercises[sectionExercises.length - 1].video = line;
-                }
+            if (currentSection && currentSection.exercises.length > 0) {
+                currentSection.exercises[currentSection.exercises.length - 1].video = line;
             }
         } else {
-            if (currentFichaName && currentSectionName) {
+            if (currentSection) {
                 const matchEx = line.match(/^(.+?)(?:\s*[-–]\s*|\s+)(\d+\s*[xX]\s*\d+(?:-\d+)?)$/);
                 let name = line;
                 let details = 'A definir';
@@ -422,20 +420,16 @@ function handleBulkCreate() {
                     name = matchEx[1].trim();
                     details = matchEx[2].trim();
                 }
-
-                if (!newPlanData[currentFichaName][currentSectionName]) {
-                    newPlanData[currentFichaName][currentSectionName] = [];
-                }
-                newPlanData[currentFichaName][currentSectionName].push({ name, details, video: '' });
+                currentSection.exercises.push({ name, details, video: '' });
             }
         }
     });
 
-    if (Object.keys(newPlanData).length === 0) {
+    if (newPlan.fichas.length === 0) {
         return alert("Nenhuma ficha foi criada. Verifique o texto e o formato (## para fichas, # para seções).");
     }
 
-    currentWorkoutData = newPlanData;
+    currentWorkoutData = newPlan;
     renderUI();
     saveToFirestore();
     closeModal('bulk-create-modal');
