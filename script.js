@@ -22,6 +22,8 @@ const exerciseModal = document.getElementById('exerciseModal');
 const bulkCreateModal = document.getElementById('bulk-create-modal');
 const roleModal = document.getElementById('role-modal');
 const studentSelector = document.getElementById('student-selector');
+const planSubtitle = document.getElementById('plan-subtitle');
+
 
 const provider = new GoogleAuthProvider();
 
@@ -71,7 +73,7 @@ onAuthStateChanged(auth, async user => {
 
 async function handleRoleSelection(role) {
     const user = auth.currentUser;
-    await setDoc(doc(db, "users", user.uid), { role, displayName: user.displayName, email: user.email, students: [] });
+    await setDoc(doc(db, "users", user.uid), { role, displayName: user.displayName, email: user.email });
     if (role === 'personal') {
         await setDoc(doc(db, "personals", user.uid), { displayName: user.displayName });
     }
@@ -92,10 +94,8 @@ async function handleLinkToPersonal() {
             role: 'aluno', personalId, displayName: user.displayName, email: user.email
         });
 
-        const personalDocRef = doc(db, "users", personalId);
-        await updateDoc(personalDocRef, {
-            students: arrayUnion({ id: user.uid, name: user.displayName })
-        });
+        const studentLinkRef = doc(db, "personals", personalId, "students", user.uid);
+        await setDoc(studentLinkRef, { name: user.displayName });
 
         await setDoc(doc(db, "plans", user.uid), { plan: {}, personalId });
         roleModal.classList.add('hidden');
@@ -106,15 +106,12 @@ async function handleLinkToPersonal() {
 }
 
 function loadStudentsForPersonal(personalId) {
-    const personalDocRef = doc(db, "users", personalId);
-    onSnapshot(personalDocRef, (docSnap) => {
-        if (docSnap.exists()) {
-            const students = docSnap.data().students || [];
-            studentSelector.innerHTML = '<option value="">Selecione um aluno</option>';
-            students.forEach(student => {
-                studentSelector.innerHTML += `<option value="${student.id}">${student.name}</option>`;
-            });
-        }
+    const studentsCollRef = collection(db, "personals", personalId, "students");
+    onSnapshot(studentsCollRef, (querySnapshot) => {
+        studentSelector.innerHTML = '<option value="">Selecione um aluno</option>';
+        querySnapshot.forEach((doc) => {
+            studentSelector.innerHTML += `<option value="${doc.id}">${doc.data().name}</option>`;
+        });
     });
 }
 
