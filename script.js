@@ -22,6 +22,7 @@ const exerciseModal = document.getElementById('exerciseModal');
 const bulkCreateModal = document.getElementById('bulk-create-modal');
 const roleModal = document.getElementById('role-modal');
 const studentSelector = document.getElementById('student-selector');
+const planSubtitle = document.getElementById('plan-subtitle');
 
 const provider = new GoogleAuthProvider();
 
@@ -183,7 +184,14 @@ function renderUI() {
         addFichaButton.className = "bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors";
         addFichaButton.textContent = "+ Adicionar Ficha";
         addFichaButton.onclick = addFicha;
+
+        const bulkAddButton = document.createElement('button');
+        bulkAddButton.className = "ml-4 bg-yellow-500 text-black py-2 px-4 rounded-lg font-medium hover:bg-yellow-600 transition-colors";
+        bulkAddButton.textContent = "Criar Ficha em Massa";
+        bulkAddButton.onclick = openBulkCreateModal;
+
         tabsContainer.appendChild(addFichaButton);
+        tabsContainer.appendChild(bulkAddButton);
     }
 
     const firstFicha = Object.keys(currentWorkoutData)[0];
