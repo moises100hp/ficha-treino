@@ -1,5 +1,5 @@
 import { firebaseConfig } from './firebase-config.js'; 
-   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, getDoc, setDoc, onSnapshot, collection, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
@@ -305,6 +305,9 @@ import { firebaseConfig } from './firebase-config.js';
             openExerciseModal: (fichaId, sectionTitle) => {
                 exerciseModal.dataset.fichaId = fichaId;
                 exerciseModal.dataset.sectionTitle = sectionTitle;
+                document.getElementById('new-exercise-name').value = '';
+                document.getElementById('new-exercise-details').value = '';
+                document.getElementById('new-exercise-video').value = '';
                 exerciseModal.classList.remove('hidden');
                 exerciseModal.classList.add('flex');
             },
