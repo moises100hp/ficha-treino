@@ -12,7 +12,7 @@
 
 <body class="bg-gray-100 text-gray-800">
 
-    <div class="container mx-auto p-4 sm:p-6 lg:p-8 max-w-4xl">
+     <div class="container mx-auto p-4 sm:p-6 lg:p-8 max-w-4xl">
         <header class="text-center mb-8">
             <h1 class="text-3xl sm:text-4xl font-bold text-gray-900">Plano de Treino</h1>
             <p id="plan-subtitle" class="text-lg text-gray-600 mt-1"></p>
@@ -32,15 +32,8 @@
         <div id="personal-dashboard" class="hidden mb-8 p-4 bg-white rounded-lg shadow">
             <h2 class="text-xl font-bold mb-2">Painel do Personal</h2>
             <p class="mb-2">Seu código para compartilhar: <strong id="personal-code" class="select-all bg-gray-200 p-1 rounded"></strong></p>
-            <div class="flex items-center gap-4 mt-4">
-                <div class="flex-grow">
-                     <label for="student-selector" class="block mb-1 text-sm font-medium">Gerenciar plano do aluno:</label>
-                     <select id="student-selector" class="w-full p-2 border rounded-md"></select>
-                </div>
-                 <button id="bulk-add-btn" class="self-end bg-yellow-500 text-black py-2 px-4 rounded-lg font-medium hover:bg-yellow-600 transition-colors">
-                    Adicionar em Massa
-                </button>
-            </div>
+            <label for="student-selector" class="block mb-2 font-medium">Gerenciar plano do aluno:</label>
+            <select id="student-selector" class="w-full p-2 border rounded-md"></select>
         </div>
 
         <div id="app-container" class="hidden">
@@ -73,7 +66,7 @@
 
      <div id="bulk-create-modal" class="fixed inset-0 bg-black bg-opacity-75 hidden justify-center items-center z-50 p-4" onclick="closeModal('bulk-create-modal')">
         <div class="bg-white p-6 rounded-lg shadow-xl w-full max-w-2xl relative" onclick="event.stopPropagation()">
-            <h3 class="text-lg font-bold mb-4">Criar Fichas em Massa</h3>
+            <h3 class="text-lg font-bold mb-4">Criar Ficha em Massa</h3>
             <div class="space-y-4">
                 <div>
                      <label for="bulk-text-input" class="block text-sm font-medium text-gray-700">Cole a ficha abaixo (## para fichas, # para seções)</label>
@@ -82,7 +75,7 @@
             </div>
             <div class="mt-6 flex justify-end space-x-3">
                 <button type="button" onclick="closeModal('bulk-create-modal')" class="bg-gray-200 py-2 px-4 rounded-lg">Cancelar</button>
-                <button type="button" onclick="handleBulkCreate()" class="bg-blue-600 text-white py-2 px-4 rounded-lg">Processar e Substituir</button>
+                <button type="button" onclick="handleBulkCreate()" class="bg-blue-600 text-white py-2 px-4 rounded-lg">Criar Ficha</button>
             </div>
         </div>
     </div>
