@@ -121,7 +121,7 @@
 };
         
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithRedirect, getRedirectResult, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, getDoc, setDoc, onSnapshot, collection, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         document.addEventListener('DOMContentLoaded', initializeAppAndAuth);
@@ -160,7 +160,7 @@
 
             const provider = new GoogleAuthProvider();
 
-            loginButton.addEventListener('click', () => signInWithRedirect(auth, provider));
+            loginButton.addEventListener('click', () => signInWithPopup(auth, provider));
             logoutButton.addEventListener('click', () => signOut(auth));
             document.getElementById('aluno-btn').addEventListener('click', () => {
                 document.getElementById('role-choice-buttons').classList.add('hidden');
@@ -170,16 +170,6 @@
             document.getElementById('link-personal-btn').addEventListener('click', handleLinkToPersonal);
             studentSelector.addEventListener('change', handleStudentSelection);
             if(bulkAddBtn) bulkAddBtn.addEventListener('click', openBulkCreateModal);
-
-            getRedirectResult(auth).catch(error => {
-                console.error("Erro no redirecionamento:", error);
-                 if (error.code === 'auth/unauthorized-domain') {
-                    showErrorNotification(
-                        `O domínio <strong>${window.location.hostname}</strong> não está autorizado.`,
-                        `Vá para o console do Firebase, em Authentication > Settings > Authorized domains, e adicione este domínio.`
-                    );
-                }
-            });
 
             onAuthStateChanged(auth, async user => {
                 if (user) {
